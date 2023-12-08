@@ -1,16 +1,20 @@
-import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/tauri";
-import {createBrowserRouter,RouterProvider} from 'react-router-dom'
-import routes from "./routes";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import "./App.css";
+import routes from "./routes";
+import { ThemeProvider } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { RootState } from './store';
 
 const router = createBrowserRouter(routes)
 
-function App() {
+const themeSelector = (state: RootState) => state.theme.theme
 
+function App() {
+  const theme = useSelector(themeSelector)
   return (
-    <RouterProvider router={router}/>
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   );
 }
 
