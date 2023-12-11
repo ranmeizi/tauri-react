@@ -1,5 +1,6 @@
 import PageA from '@/pages/PageA'
 import * as ModuleB from '@/pages/PageB'
+import MuiComps from '@/pages/MuiComps'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -32,6 +33,10 @@ const routes = [
         path: "/b",
         loader: ModuleB.loader,
         element: <ModuleB.default />
+    },
+    {
+        path:'/mui',
+        element:<MuiComps />,
     }
 ]
 

@@ -1,21 +1,19 @@
 import React from 'react'
-import { styled } from '@mui/material'
+import { Box, styled, BoxProps } from '@mui/material'
 import wrapTrackingPage from '@/tracking/page.wrapper';
 
 // 功能页(与布局无关，与需求功能强关联)
 
-const PageRoot = styled('div')({
+const PageRoot = styled(Box)({
 
 })
 
-type PageProps = React.PropsWithChildren<{
-    className?: string;
-}>;
+type PageProps = React.PropsWithChildren<BoxProps>;
 
-function Page(props: PageProps) {
+function Page({ className, children, ...boxProps }: PageProps) {
     return (
-        <PageRoot className='tr-page'>
-            {props.children}
+        <PageRoot className={`tr-page ${className}`} {...boxProps}>
+            {children}
         </PageRoot>
     )
 }

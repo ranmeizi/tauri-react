@@ -1,0 +1,59 @@
+{
+  "new-component": {
+    "prefix": "new-component",
+    "body": [
+      "import Page from '@/components/Page'",
+      "import { Box, SxProps, Theme } from '@mui/material'",
+      "import React from 'react'",
+      "",
+      "const styleSheet: SxProps<Theme> = ({theme}) => ({",
+      "    '.title': {",
+      "        fontSize: '32px',",
+      "        fontWeight: 'bold',",
+      "    },",
+      "    '.content': {",
+      "        color: '#ccc'",
+      "    }",
+      "})",
+      "",
+      "export default function () {",
+      "    return <Box sx={styleSheet}>",
+      "        <div className='title'>功能页</div>",
+      "        <div className='content'>内容和cssinjs</div>",
+      "    </Box>",
+      "}",
+      ""
+    ],
+    "description": "react function component"
+  },
+  "new-page": {
+    "prefix": "new-page",
+    "body": [
+      "import Page from '@/components/Page'",
+      "import { SxProps, Theme } from '@mui/material'",
+      "import React from 'react'",
+      "",
+      "const styleSheet: SxProps<Theme> = ({ theme }) => ({",
+      "    '.title': {",
+      "        fontSize: '32px',",
+      "        fontWeight: 'bold',",
+      "    },",
+      "    '.content': {",
+      "        color: '#ccc'",
+      "    }",
+      "})",
+      "",
+      "/** 用于埋点的 pageId (必须) */",
+      "const PAGE_ID = ''",
+      "",
+      "export default function () {",
+      "    return <Page pageId={PAGE_ID} sx={styleSheet}>",
+      "        <div className='title'>功能页</div>",
+      "        <div className='content'>内容和cssinjs</div>",
+      "    </Page>",
+      "}",
+      ""
+    ],
+    "description": "页面模板\n 必须要定义一个全应用 pageId\n Page组件已经帮你干了很多事了\n你只需要定义一个id，求求你了"
+  }
+}

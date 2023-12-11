@@ -14,5 +14,6 @@ export default function PageA() {
         <Loading1 />
         <Loading2 />
         <Link to="/b">to b</Link>
+        <Link to="/mui">to mui</Link>
     </Page>
 }

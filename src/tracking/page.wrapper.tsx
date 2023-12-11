@@ -11,8 +11,8 @@ type ExpandProps = {
 };
 
 const wrapTrackingPage: HOC_Expand<ExpandProps> = (Component: any) => {
-  return function ({ page, ...props }: any) {
-    const pageId = props.pageId;
+  return function ({ page, pageId, ...props }: any) {
+    // const pageId = props.pageId;
 
     useEffect(() => {
       onLoad()

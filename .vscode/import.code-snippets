@@ -1,0 +1,18 @@
+{
+    "TA": {
+        "prefix": "TA",
+        "body": [
+            "import TA from '@/tracking';",
+            ""
+        ],
+        "description": "TrackingAgent"
+    },
+    "EB": {
+        "prefix": "EB",
+        "body": [
+            "import EB from '@/utils/EventBus';",
+            ""
+        ],
+        "description": "Eventbus"
+    },
+}
