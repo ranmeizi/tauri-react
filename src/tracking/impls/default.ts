@@ -1,27 +1,16 @@
-import Taro from '@tarojs/taro';
 // eslint-disable-next-line
-import axios from 'taro-axios';
-import { TrackingProperties } from '../index';
 import { Stack } from '../tool/LinkNode';
 import { SetGlobal, TrackingTrait } from '../tool/abstract';
 
 let globalData = {};
-const app = 5004;
-
-const envVersion = Taro.getAccountInfoSync().miniProgram.envVersion || '';
 
 function upload(params: any) {
-  if (envVersion !== 'release') {
-    // 只有线上版才提交，不污染数据
-    return;
-  }
-  // axios 会过滤 undefined
-  axios.get('https://tj.licaimofang.com/v.gif', { params });
+  // console.log(params)
 }
 
-export default class extends TrackingTrait<TrackingProperties> {
+export default class extends TrackingTrait<any> {
   initialize(): void {}
-  track(data: TrackingProperties): void {
+  track(data: any): void {
     const d = composeData(data);
 
     console.log(
@@ -50,7 +39,6 @@ export default class extends TrackingTrait<TrackingProperties> {
 
 function composeData(data: any) {
   return {
-    app: app,
     ts: Date.now(),
     pageid: Stack.curr?.val,
     ref: Stack.curr?.prev?.val,

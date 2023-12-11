@@ -1,6 +1,7 @@
 import { Link, useLoaderData, defer, Await } from "react-router-dom"
 import React from "react"
 import Loading1 from "@/components/Loading/Loading1"
+import Page from "@/components/Page"
 
 export async function loader() {
     return defer({
@@ -30,10 +31,13 @@ type RouterData = {
     request2: string,
 }
 
+/** 用于埋点的 pageId (必须) */
+const PAGE_ID = 'page2'
+
 export default function PageB() {
     const { request1, request2 } = useLoaderData() as any
 
-    return <div>
+    return <Page pageId={PAGE_ID}>
         B
         <Link to="/a">to a</Link>
         <div>request1 = {request1}</div>
@@ -49,5 +53,5 @@ export default function PageB() {
                 }
             </Await>
         </React.Suspense>
-    </div>
+    </Page>
 }

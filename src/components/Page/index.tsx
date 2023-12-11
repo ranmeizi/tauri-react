@@ -1,8 +1,11 @@
 import React from 'react'
 import { styled } from '@mui/material'
+import wrapTrackingPage from '@/tracking/page.wrapper';
 
-const PageContainer = styled('div')({
-    
+// 功能页(与布局无关，与需求功能强关联)
+
+const PageRoot = styled('div')({
+
 })
 
 type PageProps = React.PropsWithChildren<{
@@ -11,8 +14,10 @@ type PageProps = React.PropsWithChildren<{
 
 function Page(props: PageProps) {
     return (
-        <div>
+        <PageRoot className='tr-page'>
             {props.children}
-        </div>
+        </PageRoot>
     )
 }
+
+export default wrapTrackingPage(Page)

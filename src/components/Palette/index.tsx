@@ -1,5 +1,8 @@
 import React from 'react'
 import { Box, styled } from "@mui/material";
+import * as Colors from '@mui/material/colors';
+
+console.log('color', Colors)
 
 const PaletteRoot = styled('div')(({ theme }) => ({
     background: theme.palette.background.paper,

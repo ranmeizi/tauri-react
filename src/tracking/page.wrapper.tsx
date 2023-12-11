@@ -1,7 +1,8 @@
-import { throttle } from '@/utils/delay';
+import { debounce } from '@/utils/delay';
 import TA from './index';
 import * as PageHistory from './tool/LinkNode';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
+import { Stack } from './tool/LinkNode';
 
 type ExpandProps = {
   page?: React.Ref<any>;
@@ -12,39 +13,44 @@ type ExpandProps = {
 const wrapTrackingPage: HOC_Expand<ExpandProps> = (Component: any) => {
   return function ({ page, ...props }: any) {
     const pageId = props.pageId;
-    const tabView = props.tabView;
 
     useEffect(() => {
       onLoad()
+      function onVisibilityChange(e: any) {
+        if (Stack.curr?.val === pageId) {
+          console.log('visibilitychange', document.visibilityState)
+          if (document.visibilityState === 'hidden') {
+            didHide()
+          } else {
+            didShow()
+          }
+        }
+      }
+      window.addEventListener('visibilitychange', onVisibilityChange)
       return () => {
+        window.removeEventListener('visibilitychange', onVisibilityChange)
         unLoad()
       }
     }, [])
 
-    function onLoad() {
+    const onLoad = useCallback(debounce(function () {
+      didShow()
       // 页面加载时
-      if (tabView) {
-        tabIn(pageId);
-      } else {
-        PageHistory.push(pageId);
-      }
-    }
+      PageHistory.push(pageId);
+    }, 30), [pageId])
 
-    function unLoad() {
+    const unLoad = useCallback(debounce(function () {
+      console.log('unLoad')
       TA.duration.groups['pageStay'].end(props.extension);
       PageHistory.pop();
-    }
+    }, 30), [props.extension])
 
-    function didHide() {
+    const didHide = useCallback(debounce(function () {
+      console.log('didHide')
       TA.duration.groups['pageStay'].end(props.extension);
-    }
+    }, 30), [props.extension])
 
-    function didShow() {
-      console.log('page show');
-      if (tabView) {
-        tabIn(pageId);
-      }
-
+    const didShow = useCallback(debounce(function () {
       TA.track({
         event: 'load',
         pageid: pageId,
@@ -55,21 +61,13 @@ const wrapTrackingPage: HOC_Expand<ExpandProps> = (Component: any) => {
         event: 'show',
         pageid: pageId,
       });
-    }
+    }, 30), [pageId, props.extension])
 
     return <Component ref={page} {...props} />;
   };
 };
 
-const tabIn = throttle((pageId: string) => {
-  if (PageHistory.Stack.curr) {
-    PageHistory.replace(pageId);
-  } else {
-    PageHistory.push(pageId);
-  }
-}, 20);
-
-(window as any).wx.getCurr = function () {
+(window as any).getCurr = function () {
   console.log(PageHistory.Stack.curr);
 };
 

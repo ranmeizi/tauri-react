@@ -11,6 +11,20 @@ export function throttle(fn: anyFn, delay: number) {
   };
 }
 
+const throttle_groups: Record<string, number> = {}
+
+export function throttle_group_pair(group: string, fn: anyFn, delay: number) {
+  return function (this: unknown, ...args: any[]) {
+    const prevTime = throttle_groups[group] || 0;
+    const now = new Date().getTime();
+    if (now - prevTime > delay) {
+      fn.apply(this, args);
+      throttle_groups[group] = now;
+    }
+  };
+}
+
+
 export function debounce(fn: anyFn, delay: number) {
   let timer: any = null;
   return function (this: unknown, ...args: any[]) {

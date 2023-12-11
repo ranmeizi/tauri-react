@@ -1,5 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { createTheme } from '@mui/material'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createTheme, Theme } from '@mui/material'
+import { deepmerge } from '@mui/utils'
 
 const DEFAULT_THEME = createTheme()
 
@@ -10,6 +11,9 @@ const themeSlice = createSlice({
     },
     reducers: {
         // 修改调色盘
+        mergeTheme(state, action: PayloadAction<Theme>) {
+            state.theme = deepmerge(state.theme, action.payload)
+        }
     }
 })
 
