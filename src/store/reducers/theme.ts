@@ -1,21 +1,34 @@
+import { ThemeOptions,PaletteOptions } from '@mui/material'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { createTheme, Theme } from '@mui/material'
-import { deepmerge } from '@mui/utils'
 
-const DEFAULT_THEME = createTheme()
+const default_theme: ThemeOptions = {
+    palette: {
+        x_shadow_color: {
+            light: '#000',
+            dark: '#ccc',
+        }
+    }
+}
 
 const themeSlice = createSlice({
     name: 'theme',
-    initialState: {
-        theme: DEFAULT_THEME
-    },
+    initialState: default_theme,
     reducers: {
         // 修改调色盘
-        mergeTheme(state, action: PayloadAction<Theme>) {
-            state.theme = deepmerge(state.theme, action.payload)
+        // mergeTheme(state, action: PayloadAction<Theme>) {
+        //     state.theme = deepmerge(state.theme, action.payload)
+        // },
+        changeDarkMode(state, action: PayloadAction<boolean>) {
+            if (state.palette) {
+                state.palette.mode = action.payload ? 'dark' : 'light' // 修改主题模式
+            } else {
+                state.palette = {
+                    mode: action.payload ? 'dark' : 'light'
+                }
+            }
         }
     }
 })
 
-export const { } = themeSlice.actions
+export const { changeDarkMode } = themeSlice.actions
 export default themeSlice.reducer
