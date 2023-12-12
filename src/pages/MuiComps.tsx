@@ -1,9 +1,7 @@
 import Page from '@/components/Page'
 import { changeDarkMode } from '@/store/reducers/theme'
-import { SxProps, Theme, Button, useTheme, colors, Box, Stack, Color, PaletteColorOptions, Radio, RadioGroup, keyframes, FormControlLabel } from '@mui/material'
-import React, { useContext } from 'react'
+import { Box, Button, FormControlLabel, Radio, RadioGroup, Stack, SxProps, Theme, colors, keyframes, useTheme } from '@mui/material'
 import { useDispatch } from 'react-redux'
-import { getContrastRatio } from '@mui/material/styles'
 
 const colorObj = {
     'amber': colors['amber'],
@@ -29,7 +27,7 @@ const colorObj = {
 
 const colorArr = Object.keys(colorObj)
 
-const styleSheet: SxProps<Theme> = ({ theme }) => ({
+const styleSheet: SxProps<Theme> = (theme) => ({
     '.title': {
         fontSize: '32px',
         fontWeight: 'bold',
@@ -46,7 +44,6 @@ export default function () {
     const dispatch = useDispatch()
     const theme = useTheme()
 
-    console.log(theme, '看我一下', colors)
     return <Page pageId={PAGE_ID} sx={styleSheet}>
         <div className='title'>功能页</div>
         <div className='content'>内容和cssinjs</div>
@@ -86,7 +83,7 @@ const spin = keyframes({
 
 function ColorPoint({ color }: { color: keyof typeof colorObj }) {
     return <FormControlLabel label="" value={color} control={<Radio
-        sx={({ theme }) => ({
+        sx={(theme) => ({
             marginRight: '-6px',
             '.color-radio': {
                 height: '22px',
@@ -120,3 +117,4 @@ function ColorPoint({ color }: { color: keyof typeof colorObj }) {
         inputProps={{ 'aria-label': 'Checkbox demo' }}
     />} />
 }
+

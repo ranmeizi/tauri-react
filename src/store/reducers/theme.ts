@@ -5,7 +5,7 @@ const default_theme: ThemeOptions = {
     palette: {
         x_shadow_color: {
             light: '#000',
-            dark: '#ccc',
+            dark: '#aaa',
         }
     }
 }

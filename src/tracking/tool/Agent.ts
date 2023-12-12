@@ -24,6 +24,7 @@ function applyFn(name: keyof TrackingTrait) {
   return function (this: Agent) {
     this.controllers.forEach((controller) => {
       if (typeof controller[name] === 'function') {
+        // @ts-ignore
         controller[name].apply(controller, arguments as any);
       }
     });
