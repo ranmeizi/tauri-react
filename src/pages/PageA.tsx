@@ -16,8 +16,8 @@ export default function PageA() {
         <Palette />
         <Loading1 />
         <Loading2 />
-        <Link to="/b">to b</Link>
-        <Link to="/mui">to mui</Link>
+        <Link to="/w/b">to b</Link>
+        <Link to="/w/mui">to mui</Link>
         <Button onClick={() => {
             invoke('greet', { name: 'boboan' }).then(res => {
                 console.log('greet', res)
@@ -28,5 +28,12 @@ export default function PageA() {
                 console.log('greet', res)
             })
         }}>async_greet</Button>
+
+        <Button onClick={() => {
+            console.log('open_new_window')
+            invoke('open_new_window',{url:'http://localhost:1420/w/mui'}).then(res => {
+                console.log('open_new_window', res)
+            })
+        }}>open_new_window</Button>
     </Page>
 }

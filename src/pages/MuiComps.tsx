@@ -82,39 +82,40 @@ const spin = keyframes({
 })
 
 function ColorPoint({ color }: { color: keyof typeof colorObj }) {
-    return <FormControlLabel label="" value={color} control={<Radio
-        sx={(theme) => ({
-            marginRight: '-6px',
-            '.color-radio': {
-                height: '22px',
-                width: '22px',
-                borderRadius: '11px',
-                background: colorObj[color]['500'],
-                position: 'relative',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                transition: 'all 0.2s',
-                border: '0.2px solid #fff',
-                "&::after": {
-                    position: 'absolute',
-                    height: '6px',
-                    width: '6px',
-                    borderRadius: '6px',
-                    backgroundColor: "#fff",
-                    animation: `${spin} 0.1s linear `,
+    return <FormControlLabel label="" value={color}
+        sx={{ margin: 0 }}
+        control={<Radio
+            sx={(theme) => ({
+                '.color-radio': {
+                    height: '22px',
+                    width: '22px',
+                    borderRadius: '11px',
+                    background: colorObj[color]['500'],
+                    position: 'relative',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    transition: 'all 0.2s',
+                    border: '0.2px solid #fff',
+                    "&::after": {
+                        position: 'absolute',
+                        height: '6px',
+                        width: '6px',
+                        borderRadius: '6px',
+                        backgroundColor: "#fff",
+                        animation: `${spin} 0.1s linear `,
+                    }
                 }
-            }
-        })}
-        color="default"
-        checkedIcon={<Box className='color-radio' sx={(theme) => ({
-            "&::after": {
-                content: '""'
-            },
-            filter: `drop-shadow(1px 2px 3px ${theme.palette?.x_shadow_color?.[theme.palette.mode]})`
-        })} />}
-        icon={<Box className='color-radio' />}
-        inputProps={{ 'aria-label': 'Checkbox demo' }}
-    />} />
+            })}
+            color="default"
+            checkedIcon={<Box className='color-radio' sx={(theme) => ({
+                "&::after": {
+                    content: '""'
+                },
+                filter: `drop-shadow(1px 2px 3px ${theme.palette?.x_shadow_color?.[theme.palette.mode]})`
+            })} />}
+            icon={<Box className='color-radio' />}
+            inputProps={{ 'aria-label': 'Checkbox demo' }}
+        />} />
 }
 

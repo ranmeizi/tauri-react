@@ -39,7 +39,7 @@ export default function PageB() {
 
     return <Page pageId={PAGE_ID}>
         B
-        <Link to="/a">to a</Link>
+        <Link to="/w/a">to a</Link>
         <div>request1 = {request1}</div>
         <React.Suspense fallback={<Loading1 />}>
             <Await

@@ -2,7 +2,8 @@ import PageA from '@/pages/PageA'
 import * as ModuleB from '@/pages/PageB'
 import MuiComps from '@/pages/MuiComps'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, RouteObject } from 'react-router-dom'
+import Window from '@/components/Layout/Window'
 
 function Redirect({ to }: any) {
     const navigate = useNavigate()
@@ -20,24 +21,31 @@ function delayLoader() {
     })
 }
 
-const routes = [
+const routes: RouteObject[] = [
     {
         path: "/",
-        element: <Redirect to="/a" />
+        element: <Redirect to="/w/a" />
     },
     {
-        path: "/a",
-        element: <PageA />
+        path: "/w",
+        element: <Window />,
+        children: [
+            {
+                path: "/w/a",
+                element: <PageA />
+            },
+            {
+                path: "/w/b",
+                loader: ModuleB.loader,
+                element: <ModuleB.default />
+            },
+            {
+                path: '/w/mui',
+                element: <MuiComps />,
+            }
+        ]
     },
-    {
-        path: "/b",
-        loader: ModuleB.loader,
-        element: <ModuleB.default />
-    },
-    {
-        path:'/mui',
-        element:<MuiComps />,
-    }
+
 ]
 
 export default routes;
