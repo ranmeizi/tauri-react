@@ -54,4 +54,6 @@ web
 - [ ] TagView Layout
   - [ ] 标签页开发
 - [ ] 尝试使用 rxdb 同步状态/ 状态管理(抛弃react-redux)
+  - [ ] rx react的context 创建一个collection 作为配置表，context接收值，做系统级更新 (犹豫)
+  - [ ] rx react的hoc 包裹一层响应式 props 作为组件更新，组件级更新 (看起来这样更合适)
 - [ ] ??
