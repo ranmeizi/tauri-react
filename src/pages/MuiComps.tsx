@@ -1,5 +1,4 @@
 import Page from "@/components/Page";
-import { changeDarkMode } from "@/store/reducers/theme";
 import {
   Box,
   Button,
@@ -14,7 +13,6 @@ import {
   useTheme,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { db } from "@/db";
 import * as C from "@/CONSTANTS";
 import { useRxState } from "@/db/hook/useRxState";
 import * as DaoAppConfig from "@/db/dao/AppConfig";
@@ -57,11 +55,10 @@ const styleSheet: SxProps<Theme> = (theme) => ({
 const PAGE_ID = "";
 
 export default function () {
-  const dispatch = useDispatch();
-  const primary = useRxState(DaoAppConfig.Query.get_primary().$);
-  const theme = useTheme();
+  const primary = useRxState(
+    DaoAppConfig.Observers.get_config(C.APP_CONFIG_STORAGE_KEY_PRIMARY)
+  );
 
-  console.log(primary);
   return (
     <Page pageId={PAGE_ID} sx={styleSheet}>
       {primary}
@@ -70,7 +67,10 @@ export default function () {
       <Button
         variant="contained"
         onClick={() => {
-          dispatch(changeDarkMode(true));
+          DaoAppConfig.Mutation.set_config(
+            C.APP_CONFIG_STORAGE_KEY_MODE,
+            "dark"
+          );
         }}
       >
         dark
@@ -78,7 +78,10 @@ export default function () {
       <Button
         variant="contained"
         onClick={() => {
-          dispatch(changeDarkMode(false));
+          DaoAppConfig.Mutation.set_config(
+            C.APP_CONFIG_STORAGE_KEY_MODE,
+            "light"
+          );
         }}
       >
         light
@@ -89,12 +92,9 @@ export default function () {
 }
 
 function Colors() {
-  function onChange(e) {
+  function onChange(e: any) {
     const v = e.target.value;
-    db.collections["appConfig"].upsert({
-      key: C.APP_CONFIG_STORAGE_KEY_PRIMARY,
-      value: v,
-    });
+    DaoAppConfig.Mutation.set_config(C.APP_CONFIG_STORAGE_KEY_PRIMARY, v);
   }
   return (
     <RadioGroup name="radio-buttons-group" onChange={onChange}>

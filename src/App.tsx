@@ -1,19 +1,19 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import "./App.css";
-import routes from "./routes";
+import * as C from "@/CONSTANTS";
+import * as DaoAppConfig from "@/db/dao/AppConfig";
 import {
   CssBaseline,
   ThemeOptions,
   ThemeProvider,
   colors,
   createTheme,
+  useMediaQuery,
 } from "@mui/material";
-import { deepmerge } from "@mui/utils";
-import { useSelector } from "react-redux";
-import { RootState } from "./store";
-import { useEffect, useState, useMemo } from "react";
+import { useMemo } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import "./App.css";
 import { useRxState } from "./db/hook/useRxState";
-import * as DaoAppConfig from "@/db/dao/AppConfig";
+import routes from "./routes";
+import { RootState } from "./store";
 
 const router = createBrowserRouter(routes);
 
@@ -42,24 +42,7 @@ const colorObj = {
 };
 
 function App() {
-  // const theme = useSelector(themeSelector);
-  const primary = useRxState(
-    DaoAppConfig.Query.get_primary().$
-  ) as unknown as keyof typeof colorObj;
-
-  const theme = useMemo<ThemeOptions>(() => {
-    return {
-      palette: {
-        mode: "dark",
-        x_shadow_color: {
-          light: "#000",
-          dark: "#aaa",
-        },
-        // primary: primary && colorObj[primary],
-        ...(primary ? { primary: colorObj[primary] } : {}),
-      },
-    };
-  }, [primary]);
+  const theme = useCreateTheme();
 
   return (
     <ThemeProvider theme={createTheme(theme)}>
@@ -70,3 +53,27 @@ function App() {
 }
 
 export default App;
+
+function useCreateTheme(): ThemeOptions {
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const primary = useRxState(
+    DaoAppConfig.Observers.get_config(C.APP_CONFIG_STORAGE_KEY_PRIMARY)
+  ) as unknown as keyof typeof colorObj;
+  const mode = useRxState(
+    DaoAppConfig.Observers.get_config(C.APP_CONFIG_STORAGE_KEY_MODE)
+  );
+
+  const theme = useMemo<ThemeOptions>(() => {
+    return {
+      palette: {
+        mode: mode ? mode : prefersDarkMode ? "dark" : "light",
+        x_shadow_color: {
+          light: "#000",
+          dark: "#aaa",
+        },
+        ...(primary ? { primary: colorObj[primary] } : {}),
+      },
+    };
+  }, [primary, mode]);
+  return theme;
+}

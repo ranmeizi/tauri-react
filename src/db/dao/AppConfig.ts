@@ -1,16 +1,40 @@
 import { db } from "@/db";
-import * as C from "@/CONSTANTS";
+import { BehaviorSubject, Observable } from "rxjs";
+import { RxDocument } from "rxdb";
 
-export const Query = {
-  // 获取主题色
-  get_primary() {
-    console.log(db.collections, "collections");
-    return db.collections["appConfig"].findOne({
-      selector: {
-        key: C.APP_CONFIG_STORAGE_KEY_PRIMARY,
-      },
-    });
+type AllAppConfigKeys = "cust_theme_primary" | "theme_mode";
+
+let state: Record<
+  AllAppConfigKeys,
+  BehaviorSubject<RxDocument<any>> | undefined
+> = {
+  // 主题色
+  cust_theme_primary: undefined,
+  // mode
+  theme_mode: undefined,
+};
+
+export const Observers = {
+  // 获取 mode
+  get_config(key: AllAppConfigKeys) {
+    if (!state[key]) {
+      state[key] = db.collections["appConfig"].findOne({
+        selector: {
+          key,
+        },
+      }).$;
+    }
+
+    return state[key];
   },
 };
 
-export const Mutation = {};
+export const Mutation = {
+  // 设置主题色
+  set_config(key: AllAppConfigKeys, value: string) {
+    db.collections["appConfig"].upsert({
+      key: key,
+      value: value,
+    });
+  },
+};

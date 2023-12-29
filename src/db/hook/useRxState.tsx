@@ -1,13 +1,19 @@
 // 由订阅的 rx object 映射成 组件 state rx -> state
 // import { } from 'rxdb'
-import { useEffect, useMemo, useState } from "react";
-import { Observable } from "rxjs";
+import { useEffect, useState } from "react";
+import { RxDocument } from "rxdb";
+import { BehaviorSubject } from "rxjs";
 
 // readonly
-export function useRxState<T>(implSubscribable: Observable<T>) {
+export function useRxState<T>(
+  implSubscribable?: BehaviorSubject<RxDocument<T>>
+) {
   const [state, setState] = useState<T>();
 
   useEffect(() => {
+    if (!implSubscribable) {
+      return undefined;
+    }
     const subscription = implSubscribable.subscribe((v) => {
       setState(v.get("value"));
     });
