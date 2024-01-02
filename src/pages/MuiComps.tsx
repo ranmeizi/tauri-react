@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import * as C from "@/CONSTANTS";
 import { useRxState } from "@/db/hook/useRxState";
 import * as DaoAppConfig from "@/db/dao/AppConfig";
+import { useNavigate } from "react-router-dom";
 
 const colorObj = {
   amber: colors["amber"],
@@ -59,8 +60,11 @@ export default function () {
     DaoAppConfig.Observers.get_config(C.APP_CONFIG_STORAGE_KEY_PRIMARY)
   );
 
+  const navigate = useNavigate();
+
   return (
     <Page pageId={PAGE_ID} sx={styleSheet}>
+      <div onClick={() => navigate(-1)}>返回</div>
       {primary}
       <div className="title">功能页</div>
       <div className="content">内容和cssinjs</div>

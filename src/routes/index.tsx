@@ -1,5 +1,6 @@
 import PageA from "@/pages/PageA";
 import * as ModuleB from "@/pages/PageB";
+import PokemonHandbook from "@/pages/PokemonHandbook";
 import MuiComps from "@/pages/MuiComps";
 import { useEffect } from "react";
 import { useNavigate, RouteObject } from "react-router-dom";
@@ -42,6 +43,10 @@ const routes: RouteObject[] = [
       {
         path: "/w/mui",
         element: <MuiComps />,
+      },
+      {
+        path: "/w/handbook",
+        element: <PokemonHandbook />,
       },
     ],
   },

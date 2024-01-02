@@ -13,11 +13,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import { useRxState } from "./db/hook/useRxState";
 import routes from "./routes";
-import { RootState } from "./store";
 
 const router = createBrowserRouter(routes);
-
-const themeSelector = (state: RootState) => state.theme;
 
 const colorObj = {
   amber: colors["amber"],

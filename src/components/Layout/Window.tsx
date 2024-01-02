@@ -1,19 +1,36 @@
-import { Box } from '@mui/material'
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Box } from "@mui/material";
+import React, { useEffect } from "react";
+import { Outlet, useLocation, useOutlet, useRoutes } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
 export default function () {
-    return <Box className='tr-window'>
-        <Box
-            data-tauri-drag-region=""
-            className='tr-window__titlebar'
-            sx={{ height: '30px', background: '#f0f0f0' }}
-        >
-            biubiubiu
-        </Box>
-        {/* 头部 */}
-        <Box className="tr-window__main">
-            <Outlet />
-        </Box>
+  const outlet = useOutlet();
+  const location = useLocation();
+
+  console.log(outlet);
+  return (
+    <Box className="tr-window">
+      <Box
+        data-tauri-drag-region=""
+        className="tr-window__titlebar"
+        sx={{
+          height: "30px",
+          background: "#f0f0f0",
+          paddingLeft: "80px",
+          lineHeight: "30px",
+          fontSize: "14px",
+          color: "#333",
+        }}
+      >
+        我是标题
+      </Box>
+      {/* 头部 */}
+      <Box className="tr-window__main">
+        {/* {outlet} */}
+        <AnimatePresence>
+          {outlet ? React.cloneElement(outlet, { key: location.key }) : outlet}
+        </AnimatePresence>
+      </Box>
     </Box>
+  );
 }

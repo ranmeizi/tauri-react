@@ -5,3 +5,19 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafb);
 }
+
+.tr-window{
+  height: 100vh;
+  width:100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.tr-window__main{
+  flex: 1;
+}
+
+.tr-page{
+  height: 100%;
+  width: 100%;
+}
