@@ -20,9 +20,10 @@ export default function () {
           lineHeight: "30px",
           fontSize: "14px",
           color: "#333",
+          userSelect: "none",
         }}
       >
-        我是标题
+        我是标题,你也可以在这里使用html写其他的ui
       </Box>
       {/* 头部 */}
       <Box className="tr-window__main">

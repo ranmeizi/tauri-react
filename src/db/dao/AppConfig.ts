@@ -2,7 +2,10 @@ import { db } from "@/db";
 import { BehaviorSubject, Observable } from "rxjs";
 import { RxDocument } from "rxdb";
 
-type AllAppConfigKeys = "cust_theme_primary" | "theme_mode";
+type AllAppConfigKeys =
+  | "cust_theme_primary"
+  | "theme_mode"
+  | "route_transition_direction";
 
 let state: Record<
   AllAppConfigKeys,
@@ -12,6 +15,8 @@ let state: Record<
   cust_theme_primary: undefined,
   // mode
   theme_mode: undefined,
+  //
+  route_transition_direction: undefined,
 };
 
 export const Observers = {
@@ -38,3 +43,7 @@ export const Mutation = {
     });
   },
 };
+
+setTimeout(() => {
+  Mutation.set_config("route_transition_direction", "right");
+}, 1000);

@@ -15,7 +15,7 @@ export function useRxState<T>(
       return undefined;
     }
     const subscription = implSubscribable.subscribe((v) => {
-      setState(v.get("value"));
+      setState(v && v.get("value"));
     });
     return () => {
       subscription.unsubscribe();

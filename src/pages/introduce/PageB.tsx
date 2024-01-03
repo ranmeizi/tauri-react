@@ -2,6 +2,7 @@ import { Link, useLoaderData, defer, Await } from "react-router-dom";
 import React from "react";
 import Loading1 from "@/components/Loading/Loading1";
 import Page from "@/components/Page";
+import { MotionSlide } from "@/components/EasyMotions";
 
 export async function loader() {
   return defer({
@@ -39,18 +40,20 @@ export default function PageB() {
 
   return (
     <Page pageId={PAGE_ID}>
-      B<Link to="/w/a">to a</Link>
-      <div>request1 = {request1}</div>
-      <React.Suspense fallback={<Loading1 />}>
-        <Await
-          // and is the promise we pass to Await
-          resolve={request2}
-        >
-          {(value) => {
-            return <div>request2 = {value}</div>;
-          }}
-        </Await>
-      </React.Suspense>
+      <MotionSlide type="right" duration={0.15}>
+        B<Link to="/w/a">to a</Link>
+        <div>request1 = {request1}</div>
+        <React.Suspense fallback={<Loading1 />}>
+          <Await
+            // and is the promise we pass to Await
+            resolve={request2}
+          >
+            {(value) => {
+              return <div>request2 = {value}</div>;
+            }}
+          </Await>
+        </React.Suspense>
+      </MotionSlide>
     </Page>
   );
 }

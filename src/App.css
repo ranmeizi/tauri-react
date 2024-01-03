@@ -14,10 +14,14 @@
 }
 
 .tr-window__main{
+  position: relative;
   flex: 1;
 }
 
 .tr-page{
   height: 100%;
   width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
