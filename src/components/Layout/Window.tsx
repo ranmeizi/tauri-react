@@ -14,6 +14,8 @@ export default function () {
         data-tauri-drag-region=""
         className="tr-window__titlebar"
         sx={{
+          position: "relative",
+          zIndex: 9999,
           height: "30px",
           background: "#f0f0f0",
           paddingLeft: "80px",

@@ -12,6 +12,7 @@ import { useMemo } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import { useRxState } from "./db/hook/useRxState";
+import { AppConfigProvider } from "./contexts/AppConfig";
 import routes from "./routes";
 
 const router = createBrowserRouter(routes);
@@ -44,7 +45,9 @@ function App() {
   return (
     <ThemeProvider theme={createTheme(theme)}>
       <CssBaseline />
-      <RouterProvider router={router} />
+      <AppConfigProvider>
+        <RouterProvider router={router} />
+      </AppConfigProvider>
     </ThemeProvider>
   );
 }

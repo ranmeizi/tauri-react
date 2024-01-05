@@ -1,12 +1,13 @@
 import { MotionSlide } from "@/components/EasyMotions";
 import Page from "@/components/Page";
 import { Divider, Stack, SxProps, Theme } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRxState } from "@/db/hook/useRxState";
 import * as C from "@/CONSTANTS";
 import * as DaoAppConfig from "@/db/dao/AppConfig";
 import Selector from "./Radio";
+import { context } from "@/contexts/AppConfig";
 
 const styleSheet: SxProps<Theme> = (theme) => ({
   ".page1-root": {
@@ -14,6 +15,7 @@ const styleSheet: SxProps<Theme> = (theme) => ({
     flexDirection: "column",
     alignItems: "center",
     height: "100%",
+    background: "red",
   },
   ".title": {
     marginTop: "16vh",
@@ -34,37 +36,27 @@ const PAGE_ID = "";
 export default function () {
   const navigate = useNavigate();
 
-  const direction = useRxState(
-    DaoAppConfig.Observers.get_config(C.APP_CONFIG_PAGE_TRANSITION_DIRECTION)
-  );
-
-  console.log(direction, "direction");
+  const { route_transition_direction: direction } = useContext(context);
 
   return (
     <Page pageId={PAGE_ID} sx={styleSheet}>
-      {direction && (
-        <MotionSlide
-          type={direction}
-          upperTransition
-          style={{ height: "100%" }}
-        >
-          <div className="page1-root">
-            <div className="title">Page 1</div>
-            <div>
-              <Selector />
-            </div>
-            <Stack direction="row" gap={2} sx={{ marginTop: "16vh" }}>
-              <Link to="/w/example/router-transition/direction/page2">
-                Page 2
-              </Link>
-              <Divider orientation="vertical" flexItem />
-              <Link to="#" onClick={() => navigate(-1)}>
-                Back
-              </Link>
-            </Stack>
+      <MotionSlide type={direction} upperTransition style={{ height: "100%" }}>
+        <div className="page1-root">
+          <div className="title">Page 1</div>
+          <div>
+            <Selector />
           </div>
-        </MotionSlide>
-      )}
+          <Stack direction="row" gap={2} sx={{ marginTop: "16vh" }}>
+            <Link to="/w/example/router-transition/direction/page2">
+              Page 2
+            </Link>
+            <Divider orientation="vertical" flexItem />
+            <Link to="#" onClick={() => navigate(-1)}>
+              Back
+            </Link>
+          </Stack>
+        </div>
+      </MotionSlide>
     </Page>
   );
 }

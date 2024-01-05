@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { RxDocument } from "rxdb";
 
 type AllAppConfigKeys =
@@ -43,7 +43,3 @@ export const Mutation = {
     });
   },
 };
-
-setTimeout(() => {
-  Mutation.set_config("route_transition_direction", "right");
-}, 1000);

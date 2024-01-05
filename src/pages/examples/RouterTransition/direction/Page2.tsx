@@ -1,13 +1,14 @@
 import { MotionSlide } from "@/components/EasyMotions";
 import Page from "@/components/Page";
 import { Divider, Stack, SxProps, Theme } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useRxState } from "@/db/hook/useRxState";
 import * as C from "@/CONSTANTS";
 import * as DaoAppConfig from "@/db/dao/AppConfig";
 import Selector from "./Radio";
+import { context } from "@/contexts/AppConfig";
 
 const styleSheet: SxProps<Theme> = (theme) => ({
   ".page1-root": {
@@ -15,6 +16,7 @@ const styleSheet: SxProps<Theme> = (theme) => ({
     flexDirection: "column",
     alignItems: "center",
     height: "100%",
+    background: "blue",
   },
   ".title": {
     marginTop: "16vh",
@@ -35,9 +37,7 @@ const PAGE_ID = "";
 export default function () {
   const navigate = useNavigate();
 
-  const direction = useRxState(
-    DaoAppConfig.Observers.get_config(C.APP_CONFIG_PAGE_TRANSITION_DIRECTION)
-  );
+  const { route_transition_direction: direction } = useContext(context);
 
   return (
     <Page pageId={PAGE_ID} sx={styleSheet}>
