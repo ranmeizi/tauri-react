@@ -71,6 +71,17 @@ function useCreateTheme(): ThemeOptions {
           light: "#000",
           dark: "#aaa",
         },
+        x_tab_view: {
+          ...(mode === "dark"
+            ? {
+                tabActive: "#2b2b2b",
+                tabHover: "#1b4a74",
+              }
+            : {
+                tabActive: "#2b2b2b",
+                tabHover: "#1b4a74",
+              }),
+        },
         ...(primary ? { primary: colorObj[primary] } : {}),
       },
     };

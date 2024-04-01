@@ -9,6 +9,8 @@ import ExamplePage1 from "@/pages/examples/RouterTransition/mobile/Page1";
 import ExamplePage2 from "@/pages/examples/RouterTransition/mobile/Page2";
 import ExampleDirePage1 from "@/pages/examples/RouterTransition/direction/Page1";
 import ExampleDirePage2 from "@/pages/examples/RouterTransition/direction/Page2";
+import ExampleTabPageA from "@/pages/examples/TabView/PageA";
+import ExampleTabPageB from "@/pages/examples/TabView/PageB";
 
 function Redirect({ to }: any) {
   const navigate = useNavigate();
@@ -67,6 +69,14 @@ const routes: RouteObject[] = [
       {
         path: "/w/example/router-transition/direction/page2",
         element: <ExampleDirePage2 />,
+      },
+      {
+        path: "/w/page-a",
+        element: <ExampleTabPageA />,
+      },
+      {
+        path: "/w/page-b",
+        element: <ExampleTabPageB />,
       },
     ],
   },

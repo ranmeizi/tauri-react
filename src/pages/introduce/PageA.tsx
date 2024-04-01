@@ -32,6 +32,8 @@ export default function PageA() {
           <Link to="/w/example/router-transition/direction/page1">
             {"路由过渡(方向)"}
           </Link>
+          <Divider orientation="vertical" flexItem />
+          <Link to="/w/page-a">TabView</Link>
         </Stack>
         <Button
           onClick={() => {
