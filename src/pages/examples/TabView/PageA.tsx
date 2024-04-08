@@ -5,6 +5,7 @@ import React from "react";
 import TabView from "@/components/TagView";
 import { Link, useNavigate } from "react-router-dom";
 import { MotionSlide } from "@/components/EasyMotions";
+import { useTags } from "@/db/dao/AppTags";
 
 const styleSheet: SxProps<Theme> = (theme) => ({
   padding: "40px",
@@ -26,7 +27,9 @@ export default function ExampleTabPageA() {
       <div className="title">PageA</div>
       <div className="content">内容和cssinjs</div>
       <div>
-        <Link to="/w/t/page-b">Page B</Link>
+        <Link to="/w/t/page-b" replace>
+          Page B
+        </Link>
       </div>
     </TabPage>
   );

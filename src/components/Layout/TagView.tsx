@@ -38,7 +38,7 @@ export default function ({
 }: PropsWithChildren<TabViewProps>) {
   const navigate = useNavigate();
 
-  const { tags = [], initialize, current } = useTags(namespace);
+  const { tags, initialize, current } = useTags(namespace);
 
   const currTag = useMemo(
     () => (current === undefined ? null : tags?.[current]),
@@ -46,8 +46,13 @@ export default function ({
   );
 
   useEffect(() => {
-    // 页面跳转
-    currTag?.key && navigate(currTag.key, { replace: true });
+    if (currTag?.key) {
+      // 页面跳转
+      navigate(currTag.key, { replace: true });
+    } else {
+      // 回缺省页
+      navigate(homepage, { replace: true });
+    }
   }, [currTag?.key]);
 
   useEffect(() => {
@@ -61,7 +66,7 @@ export default function ({
   }
 
   function onTabChange(index: number) {
-    const tag = tags[index];
+    const tag = tags![index];
 
     navigate(tag.key, { replace: true });
   }

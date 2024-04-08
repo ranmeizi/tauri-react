@@ -26,7 +26,9 @@ export default function ExampleTabPageA() {
       <div className="title">PageB</div>
       <div className="content">内容和cssinjs</div>
       <div>
-        <Link to="/w/t/page-a">Page A</Link>
+        <Link to="/w/t/page-a" replace>
+          Page A
+        </Link>
       </div>
     </TagPage>
   );
