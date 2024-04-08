@@ -1,8 +1,15 @@
 import Page from "@/components/Page";
 import { Box, SxProps, Tabs, Tab, Theme, BoxProps } from "@mui/material";
-import React, { PropsWithChildren, createContext, useState } from "react";
+import React, {
+  PropsWithChildren,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
 import TrTabs from "./components/Tabs";
 import TrTab from "./components/Tab";
+import { useTags } from "@/db/dao/AppTags";
+import { useNavigate } from "react-router-dom";
 
 const styleSheet: SxProps<Theme> = (theme) => ({
   display: "flex",
@@ -17,31 +24,44 @@ const styleSheet: SxProps<Theme> = (theme) => ({
 });
 
 type TabViewProps = {
+  namespace?: string;
   header?: React.ReactNode;
-};
+} & BoxProps;
 
 export default function ({
+  namespace = "default",
   header,
   children,
+  ...boxProps
 }: PropsWithChildren<TabViewProps>) {
-  const [activeKey, setActiveKey] = useState(0);
+  const navigate = useNavigate();
 
-  const list = Array(100)
-    .fill(1)
-    .map((_, index) => index + 1);
+  const { tags = [], initialize, current } = useTags(namespace);
+
+  useEffect(() => {
+    if (!tags) {
+      initialize();
+    }
+  }, []);
+
+  if (!tags) {
+    return null;
+  }
+
+  function onTabChange(index: number) {
+    const tag = tags[index];
+
+    navigate(tag.key, { replace: true });
+  }
 
   return (
-    <Box className="tr-tabs-view" sx={styleSheet}>
+    <Box {...boxProps} className="tr-tabs-view" sx={styleSheet}>
       <Box sx={{ display: "flex" }}>
         {header}
         {/* tags横向滚动区域 */}
-        <TrTabs value={activeKey} onChange={(v) => setActiveKey(v)}>
-          {list.map((item) => (
-            <TrTab>{item}</TrTab>
-          ))}
-        </TrTabs>
+        <TrTabs value={current} items={tags} onChange={onTabChange}></TrTabs>
+        {/* 浮动窗口 */}
       </Box>
-
       <Box className="tr-tabs-view__router-view">{children}</Box>
     </Box>
   );

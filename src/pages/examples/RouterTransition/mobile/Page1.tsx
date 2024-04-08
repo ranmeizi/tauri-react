@@ -38,7 +38,9 @@ export default function () {
             说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀说词儿呀
           </MotionSlide>
           <Stack direction="row" gap={2} sx={{ marginTop: "10vh" }}>
-            <Link to="/w/example/router-transition/mobile/page2">Page 2</Link>
+            <Link to="/w/tr/example/router-transition/mobile/page2">
+              Page 2
+            </Link>
             <Divider orientation="vertical" flexItem />
             <Link to="#" onClick={() => navigate(-1)}>
               Back

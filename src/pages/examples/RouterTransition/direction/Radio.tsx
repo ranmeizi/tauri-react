@@ -8,19 +8,18 @@ import * as C from "@/CONSTANTS";
 import { useRxState } from "@/db/hook/useRxState";
 
 export default function DirectionSelector() {
-  const direction =
-    useRxState(
-      DaoAppConfig.Observers.get_config(C.APP_CONFIG_PAGE_TRANSITION_DIRECTION)
-    ) || "right";
+  const direction = useRxState(
+    DaoAppConfig.Observers.get_config(C.APP_CONFIG_PAGE_TRANSITION_DIRECTION)
+  );
 
-  function onChange(v) {
+  function onChange(v: string) {
     DaoAppConfig.Mutation.set_config(C.APP_CONFIG_PAGE_TRANSITION_DIRECTION, v);
   }
   return (
     <FormControl>
       <FormLabel id="demo-row-radio-buttons-group-label">Direction</FormLabel>
       <RadioGroup
-        value={direction}
+        value={direction?.value || "right"}
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"

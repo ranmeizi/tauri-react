@@ -37,6 +37,10 @@ export function createVariants({
         return !reverse
           ? [{ x: "100%" }, { x: 0 }, { x: "-100%" }]
           : [{ x: "-100%" }, { x: 0 }, { x: "100%" }];
+      default:
+        return !reverse
+          ? [{ x: "100%" }, { x: 0 }, { x: "-100%" }]
+          : [{ x: "-100%" }, { x: 0 }, { x: "100%" }];
     }
   })();
   const transition = { duration };

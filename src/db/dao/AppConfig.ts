@@ -29,17 +29,23 @@ export const Observers = {
         },
       }).$;
     }
-
     return state[key];
   },
 };
 
 export const Mutation = {
-  // 设置主题色
+  // 设置config
   set_config(key: AllAppConfigKeys, value: string) {
-    db.collections["appConfig"].upsert({
-      key: key,
-      value: value,
-    });
+    db.collections["appConfig"]
+      .upsert({
+        key: key,
+        value: value,
+      })
+      .then((res) => {
+        console.log("then", res);
+      })
+      .catch((e) => {
+        console.log("catch", e);
+      });
   },
 };

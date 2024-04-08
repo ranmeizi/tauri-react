@@ -14,7 +14,7 @@ const PAGE_ID = "page1";
 export default function PageA() {
   return (
     <Page pageId={PAGE_ID}>
-      <MotionSlide type="right" duration={0.15}>
+      <MotionSlide type="right" duration={0.3}>
         A
         <Palette />
         <Loading1 />
@@ -26,14 +26,14 @@ export default function PageA() {
           <Divider orientation="vertical" flexItem />
           <Link to="/w/handbook">宝可梦图鉴</Link>
           <Divider orientation="vertical" flexItem />
-          <Link to="/w/example/router-transition/mobile/page1">
+          <Link to="/w/tr/example/router-transition/mobile/page1">
             {"路由过渡(移动端)"}
           </Link>
-          <Link to="/w/example/router-transition/direction/page1">
+          <Link to="/w/tr/example/router-transition/direction/page1">
             {"路由过渡(方向)"}
           </Link>
           <Divider orientation="vertical" flexItem />
-          <Link to="/w/page-a">TabView</Link>
+          <Link to="/w/t/page-a">TabView</Link>
         </Stack>
         <Button
           onClick={() => {

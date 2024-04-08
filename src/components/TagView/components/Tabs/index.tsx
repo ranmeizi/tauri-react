@@ -1,46 +1,50 @@
 import Page from "@/components/Page";
 import { Box, SxProps, TabsProps, Theme } from "@mui/material";
 import React, { PropsWithChildren, useEffect, cloneElement } from "react";
+import TrTab from "../Tab";
 
 const styleSheet: SxProps<Theme> = (theme) => ({
   display: "flex",
+  height: "40px",
   width: "100%",
   overflowX: "scroll",
+  overflowY: "hidden",
   padding: "4px 18px",
   "&::-webkit-scrollbar": {
     display: "none",
   },
+  position: "relative",
 });
 
-type TrTabsProps = Omit<TabsProps, "onClick"> & {
-  onChange: (v: number) => void;
+type TrTabsProps = Omit<TabsProps, "onClick" | "onChange"> & {
+  items: AppTag[];
+  namespace?: string;
+  onChange?: (v: number) => void;
 };
 
 export default function TrTabs({
+  items,
   value,
+  namespace = "default",
   onChange,
   children,
 }: PropsWithChildren<TrTabsProps>) {
-  useEffect(() => {
-    // 找到对应 tab scrollIntoView
-  }, [value]);
-
-  function onTabClick(index: number) {
+  function onTabClick(e: any, index: number) {
     onChange && onChange(index);
   }
 
-  console.log(children);
-
   return (
     <Box className="tr-tabs" sx={styleSheet}>
-      {children instanceof Array
-        ? children.map((el, index) =>
-            React.cloneElement(el, {
-              onClick: (e: any) => onTabClick(index),
-              className: value === index ? "active" : undefined,
-            })
-          )
-        : children}
+      {items.map((item, index) => (
+        <TrTab
+          onClick={(e) => onTabClick(e, index)}
+          tag={item}
+          namespace={namespace}
+          className={value === index ? "active" : undefined}
+        >
+          {item.title}
+        </TrTab>
+      ))}
     </Box>
   );
 }

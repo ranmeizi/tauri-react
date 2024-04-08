@@ -40,14 +40,14 @@ export default function () {
 
   return (
     <Page pageId={PAGE_ID} sx={styleSheet}>
-      <MotionSlide type={direction} upperTransition style={{ height: "100%" }}>
+      <MotionSlide type={direction} style={{ height: "100%" }}>
         <div className="page1-root">
           <div className="title">Page 1</div>
           <div>
             <Selector />
           </div>
           <Stack direction="row" gap={2} sx={{ marginTop: "16vh" }}>
-            <Link to="/w/example/router-transition/direction/page2">
+            <Link to="/w/tr/example/router-transition/direction/page2">
               Page 2
             </Link>
             <Divider orientation="vertical" flexItem />

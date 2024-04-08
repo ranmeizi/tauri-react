@@ -58,7 +58,7 @@ function useCreateTheme(): ThemeOptions {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const primary = useRxState(
     DaoAppConfig.Observers.get_config(C.APP_CONFIG_STORAGE_KEY_PRIMARY)
-  ) as unknown as keyof typeof colorObj;
+  ) as unknown as { value: keyof typeof colorObj };
   const mode = useRxState(
     DaoAppConfig.Observers.get_config(C.APP_CONFIG_STORAGE_KEY_MODE)
   );
@@ -66,13 +66,13 @@ function useCreateTheme(): ThemeOptions {
   const theme = useMemo<ThemeOptions>(() => {
     return {
       palette: {
-        mode: mode ? mode : prefersDarkMode ? "dark" : "light",
+        mode: mode ? mode.value : prefersDarkMode ? "dark" : "light",
         x_shadow_color: {
           light: "#000",
           dark: "#aaa",
         },
         x_tab_view: {
-          ...(mode === "dark"
+          ...(mode?.value === "dark"
             ? {
                 tabActive: "#2b2b2b",
                 tabHover: "#1b4a74",
@@ -82,7 +82,7 @@ function useCreateTheme(): ThemeOptions {
                 tabHover: "#1b4a74",
               }),
         },
-        ...(primary ? { primary: colorObj[primary] } : {}),
+        ...(primary ? { primary: colorObj[primary?.value || "blue"] } : {}),
       },
     };
   }, [primary, mode]);

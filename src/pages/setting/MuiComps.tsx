@@ -65,7 +65,7 @@ export default function () {
   return (
     <Page pageId={PAGE_ID} sx={styleSheet}>
       <div onClick={() => navigate(-1)}>返回</div>
-      {primary}
+      {primary?.value}
       <div className="title">功能页</div>
       <div className="content">内容和cssinjs</div>
       <Button

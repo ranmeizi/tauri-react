@@ -3,7 +3,7 @@ import * as ModuleB from "@/pages/introduce/PageB";
 import PokemonHandbook from "@/pages/pokedex/PokeDex";
 import MuiComps from "@/pages/setting/MuiComps";
 import { useEffect } from "react";
-import { useNavigate, RouteObject } from "react-router-dom";
+import { useNavigate, RouteObject, defer, Link } from "react-router-dom";
 import Window from "@/components/Layout/Window";
 import ExamplePage1 from "@/pages/examples/RouterTransition/mobile/Page1";
 import ExamplePage2 from "@/pages/examples/RouterTransition/mobile/Page2";
@@ -11,6 +11,9 @@ import ExampleDirePage1 from "@/pages/examples/RouterTransition/direction/Page1"
 import ExampleDirePage2 from "@/pages/examples/RouterTransition/direction/Page2";
 import ExampleTabPageA from "@/pages/examples/TabView/PageA";
 import ExampleTabPageB from "@/pages/examples/TabView/PageB";
+import TagView from "@/components/Layout/TagView";
+import { Box } from "@mui/material";
+import TransitionRoutes from "@/components/Layout/TransitionRoutes";
 
 function Redirect({ to }: any) {
   const navigate = useNavigate();
@@ -54,32 +57,82 @@ const routes: RouteObject[] = [
         path: "/w/handbook",
         element: <PokemonHandbook />,
       },
+
       {
-        path: "/w/example/router-transition/mobile/page1",
-        element: <ExamplePage1 />,
+        path: "/w/tr",
+        element: <TransitionRoutes />,
+        children: [
+          {
+            path: "/w/tr/example/router-transition/mobile/page1",
+            element: <ExamplePage1 />,
+          },
+          {
+            path: "/w/tr/example/router-transition/mobile/page2",
+            element: <ExamplePage2 />,
+          },
+          {
+            path: "/w/tr/example/router-transition/direction/page1",
+            element: <ExampleDirePage1 />,
+          },
+          {
+            path: "/w/tr/example/router-transition/direction/page2",
+            element: <ExampleDirePage2 />,
+          },
+        ],
       },
+
       {
-        path: "/w/example/router-transition/mobile/page2",
-        element: <ExamplePage2 />,
-      },
-      {
-        path: "/w/example/router-transition/direction/page1",
-        element: <ExampleDirePage1 />,
-      },
-      {
-        path: "/w/example/router-transition/direction/page2",
-        element: <ExampleDirePage2 />,
-      },
-      {
-        path: "/w/page-a",
-        element: <ExampleTabPageA />,
-      },
-      {
-        path: "/w/page-b",
-        element: <ExampleTabPageB />,
+        path: "/w/t",
+        element: (
+          <TagView
+            namespace="default"
+            homepage="/w/t/default"
+            header={<Header />}
+          />
+        ),
+        children: [
+          {
+            path: "/w/t/default",
+            element: null,
+          },
+          {
+            path: "/w/t/page-a",
+            loader: Meta({
+              title: "Page A",
+            }),
+            element: <ExampleTabPageA />,
+          },
+          {
+            path: "/w/t/page-b",
+            loader: Meta({
+              title: "Page B",
+            }),
+            element: <ExampleTabPageB />,
+          },
+        ],
       },
     ],
   },
 ];
 
 export default routes;
+
+type Meta = {
+  title: string;
+};
+
+function Meta(_: Meta) {
+  return () => defer(_);
+}
+
+function Header() {
+  const navigate = useNavigate();
+  return (
+    <Box sx={{ display: "flex", alignItems: "center", width: "300px" }}>
+      <Box sx={{ marginLeft: "24px", marginRight: "36px" }}>TabView 示例</Box>
+      <Link to="#" onClick={() => navigate(-1)}>
+        返回上一页
+      </Link>
+    </Box>
+  );
+}

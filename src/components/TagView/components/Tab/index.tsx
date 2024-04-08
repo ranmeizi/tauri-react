@@ -2,6 +2,7 @@ import Page from "@/components/Page";
 import { Box, BoxProps, IconButton, SxProps, Theme } from "@mui/material";
 import React, { PropsWithChildren, useMemo } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
+import { useTags } from "@/db/dao/AppTags";
 
 const styleSheet: SxProps<Theme> = (theme) => ({
   position: "relative",
@@ -14,12 +15,11 @@ const styleSheet: SxProps<Theme> = (theme) => ({
   transition: "background-color 0.3s",
 
   ".tr-tabs__clear-btn": {
-    display: "none",
     height: "24px",
     width: "24px",
     position: "absolute",
     right: "6px",
-    top: "6px",
+    top: "4px",
     padding: 0,
 
     ".MuiSvgIcon-root": {
@@ -58,18 +58,24 @@ const styleSheet: SxProps<Theme> = (theme) => ({
     "&::before,&::after": {
       opacity: 1,
     },
-    ".tr-tabs__clear-btn": {
-      display: "block",
-    },
   },
   "&:hover": {
     backgroundColor: theme.palette.x_tab_view.tabHover,
   },
+
+  ".tr-tabs__tab-inner": {
+    fontSize: "14px",
+  },
 });
 
-type TrTabProps = {} & BoxProps;
+type TrTabProps = {
+  tag: AppTag;
+  namespace: string;
+} & BoxProps;
 
 export default function TrTab({
+  tag,
+  namespace,
   children,
   className,
   ...boxProps
@@ -78,10 +84,20 @@ export default function TrTab({
     return className ? `tr-tabs__tab ${className}` : `tr-tabs__tab`;
   }, [className]);
 
+  const { close } = useTags(namespace);
+
+  function onClose() {
+    close(tag.key);
+  }
+
   return (
     <Box {...boxProps} className={cls} sx={styleSheet}>
       <span className="tr-tabs__tab-inner">{children}</span>
-      <IconButton className="tr-tabs__clear-btn" size={"small"}>
+      <IconButton
+        className="tr-tabs__clear-btn"
+        size={"small"}
+        onClick={() => onClose()}
+      >
         <ClearIcon />
       </IconButton>
     </Box>

@@ -1,9 +1,10 @@
-import TabPage from "@/components/TabView/TabPage";
+import TabPage from "@/components/TagView/TagPage";
 import Page from "@/components/Page";
 import { Box, SxProps, Theme } from "@mui/material";
 import React from "react";
-import TabView from "@/components/TabView";
+import TabView from "@/components/TagView";
 import { Link, useNavigate } from "react-router-dom";
+import { MotionSlide } from "@/components/EasyMotions";
 
 const styleSheet: SxProps<Theme> = (theme) => ({
   padding: "40px",
@@ -21,23 +22,12 @@ const PAGE_ID = "example-tab-view-pagea";
 
 export default function ExampleTabPageA() {
   return (
-    <TabView header={<Header />}>
-      <TabPage pageId={PAGE_ID} sx={styleSheet}>
-        <div className="title">PageA</div>
-        <div className="content">内容和cssinjs</div>
-      </TabPage>
-    </TabView>
-  );
-}
-
-function Header() {
-  const navigate = useNavigate();
-  return (
-    <Box sx={{ display: "flex", alignItems: "center", width: "300px" }}>
-      <Box sx={{ marginLeft: "24px", marginRight: "36px" }}>TabView 示例</Box>
-      <Link to="#" onClick={() => navigate(-1)}>
-        返回上一页
-      </Link>
-    </Box>
+    <TabPage pageId={PAGE_ID} sx={styleSheet} className="page-a">
+      <div className="title">PageA</div>
+      <div className="content">内容和cssinjs</div>
+      <div>
+        <Link to="/w/t/page-b">Page B</Link>
+      </div>
+    </TabPage>
   );
 }

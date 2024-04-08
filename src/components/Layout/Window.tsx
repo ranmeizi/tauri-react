@@ -35,7 +35,7 @@ export default function () {
       {/* 路由窗口 */}
       <Box className="tr-window__main">
         <AnimatePresence>
-          {outlet ? React.cloneElement(outlet, { key: location.key }) : outlet}
+          <Outlet />
         </AnimatePresence>
       </Box>
     </Box>

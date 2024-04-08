@@ -39,7 +39,9 @@ export default function () {
             别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀别愣着呀
           </MotionSlide>
           <Stack direction="row" gap={2} sx={{ marginTop: "16vh" }}>
-            <Link to="/w/example/router-transition/mobile/page1">Page 1</Link>
+            <Link to="/w/tr/example/router-transition/mobile/page1">
+              Page 1
+            </Link>
             <Divider orientation="vertical" flexItem />
             <Link to="#" onClick={() => navigate(-1)}>
               Back

@@ -40,7 +40,7 @@ export default function PageB() {
 
   return (
     <Page pageId={PAGE_ID}>
-      <MotionSlide type="right" duration={0.15}>
+      <MotionSlide type="right" duration={0.3}>
         B<Link to="/w/a">to a</Link>
         <div>request1 = {request1}</div>
         <React.Suspense fallback={<Loading1 />}>
