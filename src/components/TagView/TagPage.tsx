@@ -6,15 +6,15 @@ import { useLoaderData, useLocation, useRoutes } from "react-router-dom";
 import * as AppTagsDAO from "@/db/dao/AppTags";
 
 const TabPageRoot = styled(Box)({});
-type PageProps = React.PropsWithChildren<BoxProps>;
+type PageProps = { namespace: string } & React.PropsWithChildren<BoxProps>;
 
-function TabPage({ className, children, ...boxProps }: PageProps) {
+function TabPage({ className, children, namespace, ...boxProps }: PageProps) {
   let location = useLocation();
   const { title } = useLoaderData() || ({} as any);
-  const { add } = AppTagsDAO.useTags("default");
+  const { add } = AppTagsDAO.useTags(namespace);
 
   useEffect(() => {
-    let key = location.pathname + location.search;
+    let key = location.pathname;
     add({
       key,
       title,

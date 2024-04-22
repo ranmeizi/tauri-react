@@ -152,10 +152,15 @@ export const Mutation = {
   swapTag(namespace: string, sIndex: number, eIndex: number) {
     modifyFn(namespace, (data) => {
       const tags = data.tags.sort(sortFn);
-      tags.splice(eIndex, 0, tags.splice(sIndex, 1)[0]);
+      let temp = tags[eIndex].order;
+      tags[eIndex].order = tags[sIndex].order;
+      tags[sIndex].order = temp;
+
+      // 修改current
 
       return {
         ...data,
+        current: eIndex,
         tags,
       };
     });
@@ -183,7 +188,7 @@ export function useTags(namespace: string) {
 
   const apis = useMemo(() => {
     return {
-      initialize: () => Mutation.initialize(namespace),
+      initialize: (namespace: string) => Mutation.initialize(namespace),
       add: (tag: AppTag) => Mutation.add(namespace, tag),
       close: (key: string) => Mutation.close(namespace, key),
       closeAll: () => Mutation.closeAll(namespace),

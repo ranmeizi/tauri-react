@@ -1,11 +1,6 @@
 import TabPage from "@/components/TagView/TagPage";
-import Page from "@/components/Page";
 import { Box, SxProps, Theme } from "@mui/material";
-import React from "react";
-import TabView from "@/components/TagView";
-import { Link, useNavigate } from "react-router-dom";
-import { MotionSlide } from "@/components/EasyMotions";
-import { useTags } from "@/db/dao/AppTags";
+import { Link } from "react-router-dom";
 
 const styleSheet: SxProps<Theme> = (theme) => ({
   padding: "40px",

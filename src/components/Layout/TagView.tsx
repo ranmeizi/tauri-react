@@ -6,10 +6,12 @@ import React, {
   useEffect,
   useState,
   useMemo,
+  useRef,
 } from "react";
 import TrTabs from "@/components/TagView/components/Tabs";
 import { useTags } from "@/db/dao/AppTags";
 import { Outlet, useNavigate } from "react-router-dom";
+import { DragDropContextProps } from "react-beautiful-dnd";
 
 const styleSheet: SxProps<Theme> = (theme) => ({
   display: "flex",
@@ -38,7 +40,9 @@ export default function ({
 }: PropsWithChildren<TabViewProps>) {
   const navigate = useNavigate();
 
-  const { tags, initialize, current } = useTags(namespace);
+  const { tags, initialize, current, swapTag } = useTags(namespace);
+
+  const isInit = useRef(false);
 
   const currTag = useMemo(
     () => (current === undefined ? null : tags?.[current]),
@@ -46,6 +50,9 @@ export default function ({
   );
 
   useEffect(() => {
+    if (!isInit.current) {
+      return;
+    }
     if (currTag?.key) {
       // 页面跳转
       navigate(currTag.key, { replace: true });
@@ -57,8 +64,9 @@ export default function ({
 
   useEffect(() => {
     if (!tags) {
-      initialize();
+      initialize(namespace);
     }
+    isInit.current = true;
   }, []);
 
   if (!tags) {
@@ -71,12 +79,27 @@ export default function ({
     navigate(tag.key, { replace: true });
   }
 
+  const onDragEnd: DragDropContextProps["onDragEnd"] = (result) => {
+    // dropped outside the list
+    if (!result.destination) {
+      console.log("stop?");
+      return;
+    }
+
+    swapTag(result.source.index, result.destination.index);
+  };
+
   return (
     <Box {...boxProps} className="tr-tabs-view" sx={styleSheet}>
       <Box sx={{ display: "flex" }}>
         {header}
         {/* tags横向滚动区域 */}
-        <TrTabs value={current} items={tags} onChange={onTabChange}></TrTabs>
+        <TrTabs
+          value={current}
+          items={tags}
+          onChange={onTabChange}
+          onDragEndHandler={onDragEnd}
+        ></TrTabs>
         {/* 浮动窗口 */}
       </Box>
       <Box className="tr-tabs-view__router-view">

@@ -128,8 +128,15 @@ function Meta(_: Meta) {
 function Header() {
   const navigate = useNavigate();
   return (
-    <Box sx={{ display: "flex", alignItems: "center", width: "300px" }}>
-      <Box sx={{ marginLeft: "24px", marginRight: "36px" }}>TabView 示例</Box>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        width: "300px",
+        minWidth: "300px",
+      }}
+    >
+      <Box sx={{ marginLeft: "24px", marginRight: "36px" }}>TagView 示例</Box>
       <Link to="#" onClick={() => navigate(-1)}>
         返回上一页
       </Link>

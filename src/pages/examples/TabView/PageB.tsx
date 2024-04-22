@@ -1,10 +1,6 @@
 import TagPage from "@/components/TagView/TagPage";
-import Page from "@/components/Page";
-import { Box, SxProps, Theme } from "@mui/material";
-import React from "react";
-import TagView from "@/components/TagView";
+import { SxProps, Theme } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { MotionSlide } from "@/components/EasyMotions";
 
 const styleSheet: SxProps<Theme> = (theme) => ({
   padding: "40px",
@@ -18,7 +14,7 @@ const styleSheet: SxProps<Theme> = (theme) => ({
 });
 
 /** 用于埋点的 pageId (必须) */
-const PAGE_ID = "example-tab-view-pagea";
+const PAGE_ID = "example-tab-view-pageb";
 
 export default function ExampleTabPageA() {
   return (
