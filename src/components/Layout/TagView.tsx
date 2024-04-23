@@ -17,6 +17,7 @@ const styleSheet: SxProps<Theme> = (theme) => ({
   display: "flex",
   flexDirection: "column",
   height: "100%",
+  backgroundColor: theme.palette.x_header_color,
 
   ".tr-tabs-view__router-view": {
     flex: 1,

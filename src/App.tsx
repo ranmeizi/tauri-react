@@ -67,10 +67,8 @@ function useCreateTheme(): ThemeOptions {
     return {
       palette: {
         mode: mode ? mode.value : prefersDarkMode ? "dark" : "light",
-        x_shadow_color: {
-          light: "#000",
-          dark: "#aaa",
-        },
+        x_header_color: mode?.value === "dark" ? "#1f2020" : "#d6e3fb",
+        x_shadow_color: mode?.value === "dark" ? "#aaa" : "#000",
         x_tab_view: {
           ...(mode?.value === "dark"
             ? {
@@ -78,8 +76,8 @@ function useCreateTheme(): ThemeOptions {
                 tabHover: "#1b4a74",
               }
             : {
-                tabActive: "#2b2b2b",
-                tabHover: "#1b4a74",
+                tabActive: "#fff",
+                tabHover: "#aec7f6",
               }),
         },
         ...(primary ? { primary: colorObj[primary?.value || "blue"] } : {}),

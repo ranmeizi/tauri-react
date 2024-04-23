@@ -165,9 +165,7 @@ function ColorPoint({ color }: { color: keyof typeof colorObj }) {
                 "&::after": {
                   content: '""',
                 },
-                filter: `drop-shadow(1px 2px 3px ${
-                  theme.palette?.x_shadow_color?.[theme.palette.mode]
-                })`,
+                filter: `drop-shadow(1px 2px 3px ${theme.palette?.x_shadow_color})`,
               })}
             />
           }
