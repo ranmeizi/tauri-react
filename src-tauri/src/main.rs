@@ -1,11 +1,12 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
-use tauri::{CustomMenuItem, Menu, MenuItem, Submenu,Manager};
-use crate::setups::window;
+use crate::setups::window::{self, WindowExt};
+use serde_json::json;
+use tauri::{CustomMenuItem, Manager, Menu, MenuItem, Submenu};
 use tokio;
 
-mod setups;
 mod handlers;
+mod setups;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
@@ -21,14 +22,29 @@ async fn async_greet(name: &str) -> Result<String, ()> {
 
 #[tauri::command]
 async fn open_new_window(handle: tauri::AppHandle, url: &str) -> Result<(), ()> {
-    println!("open_new_window,{}", url);
     let docs_window = tauri::WindowBuilder::new(
         &handle,
         "external", /* the unique window label */
         tauri::WindowUrl::External(url.parse().unwrap()),
     )
+    .inner_size(400.0, 400.0)
     .build()
     .unwrap();
+
+    docs_window
+        .emit(
+            "x-initialize",
+            json!({
+                "window":"external",
+                "window_type":2
+            }),
+        )
+        .unwrap();
+
+    // 使用主线程修改window
+    handle
+        .run_on_main_thread(move || docs_window.set_transparent_titlebar(true))
+        .unwrap();
 
     Ok(())
 }
@@ -46,10 +62,10 @@ fn main() {
     tauri::Builder::default()
         .menu(menu)
         .setup(|app| {
-            window::setup(app); 
-   
+            window::setup(app);
+
             Ok(())
-         })
+        })
         .invoke_handler(tauri::generate_handler![
             greet,
             async_greet,

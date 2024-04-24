@@ -14,6 +14,7 @@ import ExampleTabPageB from "@/pages/examples/TabView/PageB";
 import TagView from "@/components/Layout/TagView";
 import { Box } from "@mui/material";
 import TransitionRoutes from "@/components/Layout/TransitionRoutes";
+import Homepage from "@/pages/Homepage";
 
 function Redirect({ to }: any) {
   const navigate = useNavigate();
@@ -23,23 +24,19 @@ function Redirect({ to }: any) {
   return null;
 }
 
-function delayLoader() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(1);
-    }, 5000);
-  });
-}
-
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <Redirect to="/w/a" />,
+    element: <Redirect to="/w/home" />,
   },
   {
     path: "/w",
     element: <Window />,
     children: [
+      {
+        path: "/w/home",
+        element: <Homepage />,
+      },
       {
         path: "/w/a",
         element: <PageA />,
@@ -57,7 +54,6 @@ const routes: RouteObject[] = [
         path: "/w/handbook",
         element: <PokemonHandbook />,
       },
-
       {
         path: "/w/tr",
         element: <TransitionRoutes />,
@@ -80,7 +76,6 @@ const routes: RouteObject[] = [
           },
         ],
       },
-
       {
         path: "/w/t",
         element: (
@@ -132,13 +127,15 @@ function Header() {
       sx={{
         display: "flex",
         alignItems: "center",
-        width: "300px",
-        minWidth: "300px",
+        width: "200px",
+        minWidth: "200px",
       }}
     >
-      <Box sx={{ marginLeft: "24px", marginRight: "36px" }}>TagView 示例</Box>
-      <Link to="#" onClick={() => navigate(-1)}>
-        返回上一页
+      <Box sx={{ marginLeft: "12px", marginRight: "12px", fontSize: "14px" }}>
+        TagView 示例
+      </Box>
+      <Link to="#" onClick={() => navigate(-1)} style={{ fontSize: "14px" }}>
+        Back
       </Link>
     </Box>
   );

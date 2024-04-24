@@ -23,7 +23,7 @@ export default function () {
       className="tr-window__titlebar"
       sx={headerSx}
     >
-      我是标题,你也可以在这里使用html写其他的ui
+      {/* tauri-react */}
     </Box>
   ) : null;
 

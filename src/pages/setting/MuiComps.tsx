@@ -3,20 +3,24 @@ import {
   Box,
   Button,
   FormControlLabel,
+  IconButton,
   Radio,
   RadioGroup,
   Stack,
   SxProps,
   Theme,
+  Typography,
   colors,
   keyframes,
-  useTheme,
+  Divider,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
 import * as C from "@/CONSTANTS";
 import { useRxState } from "@/db/hook/useRxState";
 import * as DaoAppConfig from "@/db/dao/AppConfig";
 import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ClearIcon from "@mui/icons-material/Clear";
+import { getCurrent } from "@tauri-apps/api/window";
 
 const colorObj = {
   amber: colors["amber"],
@@ -42,18 +46,27 @@ const colorObj = {
 
 const colorArr = Object.keys(colorObj);
 
+console.log(getCurrent());
+
 const styleSheet: SxProps<Theme> = (theme) => ({
-  ".title": {
-    fontSize: "32px",
-    fontWeight: "bold",
+  ".header": {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    padding: "12px 0",
   },
-  ".content": {
-    color: "#ccc",
+  ".header__settings": {
+    position: "absolute",
+    left: "24px",
   },
 });
 
 /** 用于埋点的 pageId (必须) */
-const PAGE_ID = "";
+const PAGE_ID = "mui-config";
+
+const is_main_window =
+  window.__TAURI_METADATA__.__currentWindow.label === "main";
 
 export default function () {
   const primary = useRxState(
@@ -64,10 +77,32 @@ export default function () {
 
   return (
     <Page pageId={PAGE_ID} sx={styleSheet}>
-      <div onClick={() => navigate(-1)}>返回</div>
-      {primary?.value}
-      <div className="title">功能页</div>
-      <div className="content">内容和cssinjs</div>
+      {/* 头部 */}
+      <Box className="header">
+        <Typography variant="h4" component="h1">
+          Theme Config
+        </Typography>
+        {is_main_window ? (
+          <IconButton
+            className="header__settings"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            <ArrowBackIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            className="header__settings"
+            onClick={() => {
+              window.close();
+            }}
+          >
+            <ClearIcon />
+          </IconButton>
+        )}
+      </Box>
+      <Divider></Divider>
       <Button
         variant="contained"
         onClick={() => {

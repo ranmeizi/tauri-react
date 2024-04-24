@@ -1,4 +1,5 @@
 use cocoa::appkit::{NSWindow, NSWindowStyleMask};
+use serde_json::json;
 use tauri::{App, Runtime, Window,Manager};
 
 pub trait WindowExt {
@@ -37,5 +38,14 @@ impl<R: Runtime> WindowExt for Window<R> {
 
 pub fn setup(app: &mut App) {
     let win = app.get_window("main").unwrap();
+    win
+    .emit(
+        "x-initialize",
+        json!({
+            "window":"main",
+            "window_type":1
+        }),
+    )
+    .unwrap();
     win.set_transparent_titlebar(true);
 }
