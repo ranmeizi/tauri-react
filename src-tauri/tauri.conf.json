@@ -50,15 +50,6 @@
     },
     "security": {
       "csp": null
-    },
-    "windows": [
-      {
-        "fullscreen": false,
-        "resizable": true,
-        "title": "tauri-react",
-        "width": 800,
-        "height": 600
-      }
-    ]
+    }
   }
 }

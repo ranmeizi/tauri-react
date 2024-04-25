@@ -8,6 +8,10 @@ use tokio;
 mod handlers;
 mod setups;
 
+const INIT_SCRIPT: &str = r#"
+  console.log("hello injection")
+"#;
+
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -21,25 +25,22 @@ async fn async_greet(name: &str) -> Result<String, ()> {
 }
 
 #[tauri::command]
-async fn open_new_window(handle: tauri::AppHandle, url: &str) -> Result<(), ()> {
+async fn open_new_window(
+    handle: tauri::AppHandle,
+    url: &str,
+    lebel: &str,
+    height: Option<f64>,
+    width: Option<f64>,
+) -> Result<(), ()> {
     let docs_window = tauri::WindowBuilder::new(
         &handle,
-        "external", /* the unique window label */
+        lebel, /* the unique window label */
         tauri::WindowUrl::External(url.parse().unwrap()),
     )
-    .inner_size(400.0, 400.0)
+    .initialization_script(INIT_SCRIPT)
+    .inner_size(width.unwrap_or(800.0), height.unwrap_or(600.0))
     .build()
     .unwrap();
-
-    docs_window
-        .emit(
-            "x-initialize",
-            json!({
-                "window":"external",
-                "window_type":2
-            }),
-        )
-        .unwrap();
 
     // 使用主线程修改window
     handle
@@ -62,8 +63,17 @@ fn main() {
     tauri::Builder::default()
         .menu(menu)
         .setup(|app| {
-            window::setup(app);
+            let win = tauri::WindowBuilder::new(
+                app,
+                "main", /* the unique window label */
+                tauri::WindowUrl::App("index.html".into()),
+            )
+            .initialization_script(INIT_SCRIPT)
+            .inner_size(800.0, 600.0)
+            .build()
+            .unwrap();
 
+            window::setup(app);
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![

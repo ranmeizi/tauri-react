@@ -1,4 +1,5 @@
 // eslint-disable-next-line
+import { emit } from "@tauri-apps/api/event";
 import { Stack } from "../tool/LinkNode";
 import { SetGlobal, TrackingTrait } from "../tool/abstract";
 
@@ -6,6 +7,7 @@ let globalData = {};
 
 function upload(params: any) {
   // console.log(params)
+  emit("x_front_tracking_data", params);
 }
 
 export default class extends TrackingTrait<any> {
@@ -14,7 +16,7 @@ export default class extends TrackingTrait<any> {
     const d = composeData(data);
 
     console.log(
-      `%cdefault 埋点日志`,
+      `%cexample_emit 埋点日志`,
       "background:rgb(15,51,228);color:#fff;border-radius:4px;padding:4px 12px",
       `event = ${d.event}, data=`,
       d

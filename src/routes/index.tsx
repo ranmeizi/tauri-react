@@ -1,6 +1,5 @@
 import PageA from "@/pages/introduce/PageA";
 import * as ModuleB from "@/pages/introduce/PageB";
-import PokemonHandbook from "@/pages/pokedex/PokeDex";
 import MuiComps from "@/pages/setting/MuiComps";
 import { useEffect } from "react";
 import { useNavigate, RouteObject, defer, Link } from "react-router-dom";
@@ -15,6 +14,7 @@ import TagView from "@/components/Layout/TagView";
 import { Box } from "@mui/material";
 import TransitionRoutes from "@/components/Layout/TransitionRoutes";
 import Homepage from "@/pages/Homepage";
+import TrackingLog from "@/pages/examples/TrackingLog";
 
 function Redirect({ to }: any) {
   const navigate = useNavigate();
@@ -51,8 +51,8 @@ const routes: RouteObject[] = [
         element: <MuiComps />,
       },
       {
-        path: "/w/handbook",
-        element: <PokemonHandbook />,
+        path: "/w/tracking-log",
+        element: <TrackingLog />,
       },
       {
         path: "/w/tr",

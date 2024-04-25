@@ -6,7 +6,6 @@ declare module "@mui/material/styles/createPalette" {
     x_tab_view: {
       tabActive: string;
       tabHover: string;
-      tabViewBg: string;
     };
   }
 
@@ -16,7 +15,6 @@ declare module "@mui/material/styles/createPalette" {
     x_tab_view: {
       tabActive: string;
       tabHover: string;
-      tabViewBg: string;
     };
   }
 }

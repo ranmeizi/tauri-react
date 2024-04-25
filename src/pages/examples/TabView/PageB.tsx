@@ -18,7 +18,12 @@ const PAGE_ID = "example-tab-view-pageb";
 
 export default function ExampleTabPageA() {
   return (
-    <TagPage pageId={PAGE_ID} sx={styleSheet} className="page-b">
+    <TagPage
+      pageId={PAGE_ID}
+      sx={styleSheet}
+      className="page-b"
+      namespace="default"
+    >
       <div className="title">PageB</div>
       <div className="content">内容和cssinjs</div>
       <div>

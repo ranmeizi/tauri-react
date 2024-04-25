@@ -1,52 +1,8 @@
 import Page from "@/components/Page";
-import {
-  Box,
-  Button,
-  FormControlLabel,
-  IconButton,
-  Radio,
-  RadioGroup,
-  Stack,
-  SxProps,
-  Theme,
-  Typography,
-  colors,
-  keyframes,
-  Divider,
-} from "@mui/material";
-import * as C from "@/CONSTANTS";
-import { useRxState } from "@/db/hook/useRxState";
-import * as DaoAppConfig from "@/db/dao/AppConfig";
-import { useNavigate } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ClearIcon from "@mui/icons-material/Clear";
-import { getCurrent } from "@tauri-apps/api/window";
-
-const colorObj = {
-  amber: colors["amber"],
-  blue: colors["blue"],
-  blueGrey: colors["blueGrey"],
-  brown: colors["brown"],
-  cyan: colors["cyan"],
-  deepOrange: colors["deepOrange"],
-  deepPurple: colors["deepPurple"],
-  green: colors["green"],
-  grey: colors["grey"],
-  indigo: colors["indigo"],
-  lightBlue: colors["lightBlue"],
-  lightGreen: colors["lightGreen"],
-  lime: colors["lime"],
-  orange: colors["orange"],
-  pink: colors["pink"],
-  purple: colors["purple"],
-  red: colors["red"],
-  teal: colors["teal"],
-  yellow: colors["yellow"],
-};
-
-const colorArr = Object.keys(colorObj);
-
-console.log(getCurrent());
+import { Box, SxProps, Theme, Typography, Divider } from "@mui/material";
+import DarkModeSwitch from "./components/DarkModeSwitch";
+import List from "./components/List";
+import PrimaryPicker from "./components/PrimaryPicker";
 
 const styleSheet: SxProps<Theme> = (theme) => ({
   ".header": {
@@ -65,16 +21,30 @@ const styleSheet: SxProps<Theme> = (theme) => ({
 /** 用于埋点的 pageId (必须) */
 const PAGE_ID = "mui-config";
 
-const is_main_window =
-  window.__TAURI_METADATA__.__currentWindow.label === "main";
-
 export default function () {
-  const primary = useRxState(
-    DaoAppConfig.Observers.get_config(C.APP_CONFIG_STORAGE_KEY_PRIMARY)
-  );
-
-  const navigate = useNavigate();
-
+  const introItems = [
+    {
+      label: "全局的config",
+      field: (
+        <Box>
+          <Typography variant="body2">
+            使用 rxdb
+            进行状态管理，可实时的共享到多窗口，并且本身支持持久化，非常适合可以打开多窗口的tauri桌面应用。
+          </Typography>
+        </Box>
+      ),
+    },
+  ];
+  const configItems = [
+    {
+      label: "暗黑模式",
+      field: <DarkModeSwitch component="switch" />,
+    },
+    {
+      label: "主题色",
+      field: <PrimaryPicker />,
+    },
+  ];
   return (
     <Page pageId={PAGE_ID} sx={styleSheet}>
       {/* 头部 */}
@@ -82,132 +52,16 @@ export default function () {
         <Typography variant="h4" component="h1">
           Theme Config
         </Typography>
-        {is_main_window ? (
-          <IconButton
-            className="header__settings"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            <ArrowBackIcon />
-          </IconButton>
-        ) : (
-          <IconButton
-            className="header__settings"
-            onClick={() => {
-              window.close();
-            }}
-          >
-            <ClearIcon />
-          </IconButton>
-        )}
       </Box>
       <Divider></Divider>
-      <Button
-        variant="contained"
-        onClick={() => {
-          DaoAppConfig.Mutation.set_config(
-            C.APP_CONFIG_STORAGE_KEY_MODE,
-            "dark"
-          );
-        }}
-      >
-        dark
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          DaoAppConfig.Mutation.set_config(
-            C.APP_CONFIG_STORAGE_KEY_MODE,
-            "light"
-          );
-        }}
-      >
-        light
-      </Button>
-      <Colors />
+      <Box sx={{ height: "100%", overflow: "scroll" }}>
+        <Box sx={{ padding: 2 }}>
+          <List items={introItems} />
+        </Box>
+        <Box sx={{ padding: 2 }}>
+          <List items={configItems} />
+        </Box>
+      </Box>
     </Page>
-  );
-}
-
-function Colors() {
-  function onChange(e: any) {
-    const v = e.target.value;
-    DaoAppConfig.Mutation.set_config(C.APP_CONFIG_STORAGE_KEY_PRIMARY, v);
-  }
-  return (
-    <RadioGroup name="radio-buttons-group" onChange={onChange}>
-      <Stack direction="row">
-        {colorArr.map((item: any) => (
-          <ColorPoint color={item} />
-        ))}
-      </Stack>
-    </RadioGroup>
-  );
-}
-
-// 创建一个 @keyframes 规则
-const spin = keyframes({
-  "0%": {
-    height: 0,
-    width: 0,
-  },
-  "80%": {
-    height: "8px",
-    width: "8px",
-  },
-  "100%": {
-    height: "6px",
-    width: "6px",
-  },
-});
-
-function ColorPoint({ color }: { color: keyof typeof colorObj }) {
-  return (
-    <FormControlLabel
-      label=""
-      value={color}
-      sx={{ margin: 0 }}
-      control={
-        <Radio
-          sx={(theme) => ({
-            ".color-radio": {
-              height: "22px",
-              width: "22px",
-              borderRadius: "11px",
-              background: colorObj[color]["500"],
-              position: "relative",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              transition: "all 0.2s",
-              border: "0.2px solid #fff",
-              "&::after": {
-                position: "absolute",
-                height: "6px",
-                width: "6px",
-                borderRadius: "6px",
-                backgroundColor: "#fff",
-                animation: `${spin} 0.1s linear `,
-              },
-            },
-          })}
-          color="default"
-          checkedIcon={
-            <Box
-              className="color-radio"
-              sx={(theme) => ({
-                "&::after": {
-                  content: '""',
-                },
-                filter: `drop-shadow(1px 2px 3px ${theme.palette?.x_shadow_color})`,
-              })}
-            />
-          }
-          icon={<Box className="color-radio" />}
-          inputProps={{ "aria-label": "Checkbox demo" }}
-        />
-      }
-    />
   );
 }

@@ -36,16 +36,15 @@ export const Observers = {
 export const Mutation = {
   // 设置config
   set_config(key: AllAppConfigKeys, value: string) {
-    db.collections["appConfig"]
-      .upsert({
-        key: key,
-        value: value,
-      })
-      .then((res) => {
-        console.log("then", res);
-      })
-      .catch((e) => {
-        console.log("catch", e);
-      });
+    db.collections["appConfig"].upsert({
+      key: key,
+      value: value,
+    });
+    // .then((res) => {
+    //   console.log("then", res);
+    // })
+    // .catch((e) => {
+    //   console.log("catch", e);
+    // });
   },
 };

@@ -2,12 +2,25 @@ use cocoa::appkit::{NSWindow, NSWindowStyleMask};
 use serde_json::json;
 use tauri::{App, Runtime, Window,Manager};
 
+const INIT_SCRIPT: &str = r#"
+  if (window.location.origin === 'https://tauri.app') {
+    console.log("hello world from js init script");
+
+    window.__MY_CUSTOM_PROPERTY__ = { foo: 'bar' };
+  }
+"#;
+
 pub trait WindowExt {
+
     #[cfg(target_os = "macos")]
     fn set_transparent_titlebar(&self, transparent: bool);
 }
 
 impl<R: Runtime> WindowExt for Window<R> {
+
+    /**
+     * 隐藏window 头部，为了使用 html 绘制头部
+     */
     #[cfg(target_os = "macos")]
     fn set_transparent_titlebar(&self, transparent: bool) {
         use cocoa::appkit::NSWindowTitleVisibility;
@@ -38,14 +51,5 @@ impl<R: Runtime> WindowExt for Window<R> {
 
 pub fn setup(app: &mut App) {
     let win = app.get_window("main").unwrap();
-    win
-    .emit(
-        "x-initialize",
-        json!({
-            "window":"main",
-            "window_type":1
-        }),
-    )
-    .unwrap();
     win.set_transparent_titlebar(true);
 }

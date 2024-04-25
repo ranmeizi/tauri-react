@@ -25,5 +25,5 @@ export async function init(next: AsyncProcessFn) {
     },
   });
 
-  next();
+  await next();
 }

@@ -4,7 +4,11 @@ import wrapTrackingPage from "@/tracking/page.wrapper";
 
 // 功能页(与布局无关，与需求功能强关联)
 
-const PageRoot = styled(Box)({});
+const PageRoot = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  overflow: "hidden",
+});
 
 type PageProps = React.PropsWithChildren<BoxProps>;
 

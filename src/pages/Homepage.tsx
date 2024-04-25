@@ -11,6 +11,7 @@ import {
   Card,
   CardContent,
   Button,
+  Stack,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import React, { ReactNode, useState } from "react";
@@ -19,6 +20,7 @@ import { createPortal } from "react-dom";
 import Pacman from "@/components/Widgets/Pacman";
 import CloseIcon from "@mui/icons-material/Close";
 import { invoke } from "@tauri-apps/api/tauri";
+import DarkModeSwitch from "./setting/components/DarkModeSwitch";
 
 const styleSheet: SxProps<Theme> = (theme) => ({
   height: "100%",
@@ -70,7 +72,14 @@ const examples: ExampleItem[] = [
   {
     title: "Rxdb数据存储",
     desc: "响应式，持久化的数据存储",
-    link: "/w/tr/example/router-transition/mobile/page1",
+    action: () => {
+      invoke("open_new_window", {
+        url: "http://localhost:1420/w/mui",
+        lebel: "window_rxdb_example",
+        height: 600,
+        width: 400,
+      });
+    },
   },
   {
     title: "html绘制的头部",
@@ -98,6 +107,18 @@ const examples: ExampleItem[] = [
       );
     },
   },
+  {
+    title: "用户行为追踪",
+    desc: "页面/点击 事件日志",
+    action: () => {
+      invoke("open_new_window", {
+        url: "http://localhost:1420/w/tracking-log",
+        lebel: "window_rxdb_example",
+        height: 800,
+        width: 600,
+      });
+    },
+  },
 ];
 
 export default function () {
@@ -107,18 +128,23 @@ export default function () {
         <Typography variant="h4" component="h1">
           Truri-React
         </Typography>
-        <IconButton
-          className="header__settings"
-          onClick={() => {
-            invoke("open_new_window", {
-              url: "http://localhost:1420/w/mui",
-            }).then((res) => {
-              console.log("open_new_window", res);
-            });
-          }}
-        >
-          <SettingsIcon />
-        </IconButton>
+        <Stack direction={"row"} gap={2} className="header__settings">
+          <DarkModeSwitch />
+          <IconButton
+            onClick={() => {
+              invoke("open_new_window", {
+                url: "http://localhost:1420/w/mui",
+                lebel: "window_config",
+                height: 600,
+                width: 400,
+              }).then((res) => {
+                console.log("open_new_window", res);
+              });
+            }}
+          >
+            <SettingsIcon />
+          </IconButton>
+        </Stack>
       </Box>
 
       <Divider></Divider>
