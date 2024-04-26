@@ -74,7 +74,6 @@ class Group {
   }
 
   end(data?: any) {
-    console.log("end", data, this.startTime, this.data);
     if (!this.startTime) {
       // 无效调用
       return;
