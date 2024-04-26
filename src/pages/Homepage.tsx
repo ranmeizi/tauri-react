@@ -113,9 +113,9 @@ const examples: ExampleItem[] = [
     action: () => {
       invoke("open_new_window", {
         url: "http://localhost:1420/w/tracking-log",
-        lebel: "window_rxdb_example",
+        lebel: "window_tracking_log",
         height: 800,
-        width: 600,
+        width: 960,
       });
     },
   },

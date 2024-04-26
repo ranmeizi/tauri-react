@@ -1,17 +1,17 @@
-import { TrackingTrait } from './abstract';
+import { TrackingTrait } from "./abstract";
 
 type Data = any;
 
 type SetDurationFn = (data: Data, duration: number) => Data;
 
 type DurationOptions = {
-  track: TrackingTrait['track'];
+  track: TrackingTrait["track"];
   setDuration?: SetDurationFn;
 };
 
 type GroupOptions = {
   name: string;
-  track: TrackingTrait['track'];
+  track: TrackingTrait["track"];
   setDuration?: SetDurationFn;
 };
 
@@ -26,7 +26,7 @@ export class Duration {
 
   createGroup(name: string) {
     if (name in this.groups) {
-      throw new Error('Duration.createGroup: name is existed');
+      throw new Error("Duration.createGroup: name is existed");
     }
 
     this.groups[name] = new Group({
@@ -57,7 +57,7 @@ class Group {
   }
 
   setData(data?: any) {
-    if (data && typeof data === 'object') {
+    if (data && typeof data === "object") {
       Object.assign(this.data, data);
     }
   }
@@ -74,6 +74,7 @@ class Group {
   }
 
   end(data?: any) {
+    console.log("end", data, this.startTime, this.data);
     if (!this.startTime) {
       // 无效调用
       return;

@@ -25,7 +25,7 @@ const styleSheet: SxProps<Theme> = (theme) => ({
 });
 
 /** 用于埋点的 pageId (必须) */
-const PAGE_ID = "";
+const PAGE_ID = "example-transition-mobile-page1";
 
 export default function () {
   const navigate = useNavigate();

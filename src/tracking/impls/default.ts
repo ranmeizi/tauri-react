@@ -13,8 +13,9 @@ export default class extends TrackingTrait<any> {
   track(data: any): void {
     const d = composeData(data);
 
+    console.log("data", d);
     console.log(
-      `%cdefault 埋点日志`,
+      `%c default 埋点日志`,
       "background:rgb(15,51,228);color:#fff;border-radius:4px;padding:4px 12px",
       `event = ${d.event}, data=`,
       d

@@ -1,8 +1,9 @@
 import { debounce } from "@/utils/delay";
 import TA from "./index";
 import * as PageHistory from "./tool/LinkNode";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { Stack } from "./tool/LinkNode";
+import { TauriEvent, listen } from "@tauri-apps/api/event";
 
 type ExpandProps = {
   page?: React.Ref<any>;
@@ -13,6 +14,8 @@ type ExpandProps = {
 const wrapTrackingPage: HOC_Expand<ExpandProps> = (Component: any) => {
   return function ({ page, pageId, ...props }: any) {
     // const pageId = props.pageId;
+
+    const tauriPageListen = useRef<any[]>();
 
     useEffect(() => {
       onLoad();
@@ -26,12 +29,32 @@ const wrapTrackingPage: HOC_Expand<ExpandProps> = (Component: any) => {
           }
         }
       }
+
       window.addEventListener("visibilitychange", onVisibilityChange);
       return () => {
         window.removeEventListener("visibilitychange", onVisibilityChange);
         unLoad();
+        tauriPageListen.current?.forEach((removeFn) => removeFn());
       };
     }, []);
+
+    // async function tauriWindowListen() {
+    //   tauriPageListen.current = [
+    //     await listen(TauriEvent.WINDOW_BLUR, function () {
+    //       console.log("blur");
+    //       didHide();
+    //     }),
+    //     await listen(TauriEvent.WINDOW_FOCUS, function () {
+    //       console.log("focus");
+    //       didShow();
+    //     }),
+    //     await listen(TauriEvent.WINDOW_DESTROYED, function () {
+    //       console.log("destroyed");
+    //       TA.duration.groups["pageStay"].end(props.extension);
+    //       PageHistory.pop();
+    //     }),
+    //   ];
+    // }
 
     const onLoad = useCallback(
       debounce(function () {
@@ -44,7 +67,6 @@ const wrapTrackingPage: HOC_Expand<ExpandProps> = (Component: any) => {
 
     const unLoad = useCallback(
       debounce(function () {
-        console.log("unLoad");
         TA.duration.groups["pageStay"].end(props.extension);
         PageHistory.pop();
       }, 30),
@@ -53,7 +75,6 @@ const wrapTrackingPage: HOC_Expand<ExpandProps> = (Component: any) => {
 
     const didHide = useCallback(
       debounce(function () {
-        console.log("didHide");
         TA.duration.groups["pageStay"].end(props.extension);
       }, 30),
       [props.extension]
