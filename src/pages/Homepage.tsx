@@ -132,11 +132,19 @@ export default function () {
           <DarkModeSwitch />
           <IconButton
             onClick={() => {
+              // invoke("open_new_window", {
+              //   url: "http://localhost:1420/w/mui",
+              //   lebel: "window_config",
+              //   height: 600,
+              //   width: 400,
+              // }).then((res) => {
+              //   console.log("open_new_window", res);
+              // });
               invoke("open_new_window", {
-                url: "http://localhost:1420/w/mui",
+                url: "http://localhost:1420",
                 lebel: "window_config",
-                height: 600,
-                width: 400,
+                height: 800,
+                width: 1200,
               }).then((res) => {
                 console.log("open_new_window", res);
               });

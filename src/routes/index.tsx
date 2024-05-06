@@ -15,6 +15,7 @@ import { Box } from "@mui/material";
 import TransitionRoutes from "@/components/Layout/TransitionRoutes";
 import Homepage from "@/pages/Homepage";
 import TrackingLog from "@/pages/examples/TrackingLog";
+import { route as DOC_ROUTES } from "@/pages/docs/routes";
 
 function Redirect({ to }: any) {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ function Redirect({ to }: any) {
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <Redirect to="/w/home" />,
+    element: <Redirect to="/w/doc" />,
   },
   {
     path: "/w",
@@ -54,6 +55,7 @@ const routes: RouteObject[] = [
         path: "/w/tracking-log",
         element: <TrackingLog />,
       },
+      DOC_ROUTES,
       {
         path: "/w/tr",
         element: <TransitionRoutes />,

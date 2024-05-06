@@ -49,7 +49,6 @@ impl<R: Runtime> WindowExt for Window<R> {
     }
 }
 
-pub fn setup(app: &mut App) {
-    let win = app.get_window("main").unwrap();
+pub fn setup(win: Window) {
     win.set_transparent_titlebar(true);
 }

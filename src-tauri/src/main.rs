@@ -2,27 +2,16 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 use crate::setups::window::{self, WindowExt};
 use serde_json::json;
-use tauri::{CustomMenuItem, Manager, Menu, MenuItem, Submenu};
+use tauri::{CustomMenuItem, Manager, Menu, MenuItem, Submenu,WindowEvent};
 use tokio;
 
 mod handlers;
 mod setups;
 
 const INIT_SCRIPT: &str = r#"
-  console.log("hello injection")
+  console.log("hi, use WindowBuilder.initialization_script to inject javascript in your html")
 "#;
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
-
-#[tauri::command]
-async fn async_greet(name: &str) -> Result<String, ()> {
-    tokio::time::sleep(std::time::Duration::from_secs(1)).await;
-    Ok(format!("Hello, {}! You've been greeted from Rust!", name))
-}
 
 #[tauri::command]
 async fn open_new_window(
@@ -33,7 +22,7 @@ async fn open_new_window(
     width: Option<f64>,
 ) -> Result<(), ()> {
     let docs_window = tauri::WindowBuilder::new(
-        &handle,
+        &handle.clone(),
         lebel, /* the unique window label */
         tauri::WindowUrl::External(url.parse().unwrap()),
     )
@@ -41,6 +30,8 @@ async fn open_new_window(
     .inner_size(width.unwrap_or(800.0), height.unwrap_or(600.0))
     .build()
     .unwrap();
+
+    // todo!("这里，识别label，若当前有label = label的window，那么把它调到顶层");
 
     // 使用主线程修改window
     handle
@@ -69,16 +60,16 @@ fn main() {
                 tauri::WindowUrl::App("index.html".into()),
             )
             .initialization_script(INIT_SCRIPT)
-            .inner_size(800.0, 600.0)
+            .inner_size(1200.0, 900.0)
             .build()
             .unwrap();
 
-            window::setup(app);
+            window::setup(win);
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            greet,
-            async_greet,
+            handlers::example::greet,
+            handlers::example::async_greet,
             open_new_window
         ])
         .run(tauri::generate_context!())
