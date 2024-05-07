@@ -7,7 +7,7 @@ import wrapTrackingPage from "@/tracking/page.wrapper";
 const PageRoot = styled(Box)({
   display: "flex",
   flexDirection: "column",
-  overflow: "hidden",
+  overflow: "scroll",
 });
 
 type PageProps = React.PropsWithChildren<BoxProps>;

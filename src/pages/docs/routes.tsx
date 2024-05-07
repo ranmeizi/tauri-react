@@ -18,17 +18,17 @@ const menu: MenuType[] = [
     path: "/w/doc/tauri-react",
     element: <DocTauriReact />,
   },
-  {
-    title: "项目介绍",
-    path: "/w/doc/introduce",
-    children: [
-      {
-        title: "Window HTML头部",
-        path: "/w/doc/introduce/window-header",
-        element: <DocWindowHeader />,
-      },
-    ],
-  },
+  // {
+  //   title: "项目介绍",
+  //   path: "/w/doc/introduce",
+  //   children: [
+  //     {
+  //       title: "Window HTML头部",
+  //       path: "/w/doc/introduce/window-header",
+  //       element: <DocWindowHeader />,
+  //     },
+  //   ],
+  // },
   {
     title: "示例",
     path: "/w/doc/examples",

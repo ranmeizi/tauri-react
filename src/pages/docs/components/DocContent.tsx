@@ -3,7 +3,7 @@ import { Box, Container, SxProps, Theme } from "@mui/material";
 import React, { PropsWithChildren } from "react";
 
 const styleSheet: SxProps<Theme> = (theme) => ({
-  paddingTop: "40px",
+  padding: "40px 0",
 });
 
 export default function DocContent({ children }: PropsWithChildren) {

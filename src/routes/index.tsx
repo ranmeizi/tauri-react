@@ -28,16 +28,12 @@ function Redirect({ to }: any) {
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <Redirect to="/w/doc" />,
+    element: <Redirect to="/w/doc/tauri-react" />,
   },
   {
     path: "/w",
     element: <Window />,
     children: [
-      {
-        path: "/w/home",
-        element: <Homepage />,
-      },
       {
         path: "/w/a",
         element: <PageA />,
