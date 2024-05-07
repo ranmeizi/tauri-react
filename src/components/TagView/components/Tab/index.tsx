@@ -1,6 +1,14 @@
 import Page from "@/components/Page";
-import { Box, BoxProps, IconButton, SxProps, Theme } from "@mui/material";
-import React, { PropsWithChildren, useMemo } from "react";
+import {
+  Box,
+  BoxProps,
+  IconButton,
+  Menu,
+  MenuItem,
+  SxProps,
+  Theme,
+} from "@mui/material";
+import React, { PropsWithChildren, useMemo, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useTags } from "@/db/dao/AppTags";
 
@@ -69,6 +77,29 @@ const styleSheet: SxProps<Theme> = (theme) => ({
   },
 });
 
+type ClickPos = {
+  mouseX: number;
+  mouseY: number;
+} | null;
+
+export function useTagContentMemu() {
+  const [contextMenu, setContextMenu] = useState<ClickPos>(null);
+
+  const handleContextMenu = (event: React.MouseEvent) => {
+    event.preventDefault();
+    setContextMenu(
+      contextMenu === null
+        ? {
+            mouseX: event.clientX + 2,
+            mouseY: event.clientY - 6,
+          }
+        : null
+    );
+  };
+
+  return [contextMenu, handleContextMenu] as const;
+}
+
 type TrTabProps = {
   tag: AppTag;
   namespace: string;
@@ -88,14 +119,22 @@ export default React.forwardRef(function TrTab(
     return className ? `tr-tabs__tab ${className}` : `tr-tabs__tab`;
   }, [className]);
 
-  const { close } = useTags(namespace);
+  const [contextMenu, handleContextMenu] = useTagContentMemu();
+
+  const { close, closeOther, closeRight, closeAll } = useTags(namespace);
 
   function onClose() {
     close(tag.key);
   }
 
   return (
-    <Box ref={ref} className={cls} sx={styleSheet} {...boxProps}>
+    <Box
+      ref={ref}
+      className={cls}
+      sx={styleSheet}
+      onContextMenu={handleContextMenu}
+      {...boxProps}
+    >
       <span className="tr-tabs__tab-inner">{children}</span>
       <IconButton
         className="tr-tabs__clear-btn"
@@ -104,6 +143,49 @@ export default React.forwardRef(function TrTab(
       >
         <ClearIcon />
       </IconButton>
+      <Menu
+        open={contextMenu !== null}
+        onClose={handleContextMenu}
+        anchorReference="anchorPosition"
+        anchorPosition={
+          contextMenu !== null
+            ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+            : undefined
+        }
+      >
+        <MenuItem
+          onClick={(event) => {
+            handleContextMenu(event);
+            close(tag.key);
+          }}
+        >
+          关闭
+        </MenuItem>
+        <MenuItem
+          onClick={(event) => {
+            handleContextMenu(event);
+            closeOther(tag.key);
+          }}
+        >
+          关闭其他
+        </MenuItem>
+        <MenuItem
+          onClick={(event) => {
+            handleContextMenu(event);
+            closeRight(tag.key);
+          }}
+        >
+          关闭到右侧
+        </MenuItem>
+        <MenuItem
+          onClick={(event) => {
+            handleContextMenu(event);
+            closeAll();
+          }}
+        >
+          全部关闭
+        </MenuItem>
+      </Menu>
     </Box>
   );
 });

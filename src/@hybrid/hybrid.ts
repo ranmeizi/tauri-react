@@ -1,6 +1,51 @@
+declare global {
+  interface Window {
+    H5_ENV: envs;
+    h5_bridge: AbsHybrid;
+  }
+}
+
 // 抽象类
 export abstract class AbsHybrid {
-  public abstract openWindow(): void;
+  /**
+   * 打开新窗口
+   */
+  public abstract openWindow(
+    url: string,
+    target?: string,
+    features?: string
+  ): any;
+
+  /**
+   * 打开浏览器
+   */
+  public abstract openBrowser(url: string): any;
+
+  /**
+   * 工具
+   */
+  public utils = {
+    features: {
+      encode(data: Record<string, string | number> = {}): string {
+        let items = [];
+        for (let [key, value] of Object.entries(data)) {
+          items.push(`${key}=${value}`);
+        }
+        return items.join(",");
+      },
+      decode(featuresString: string = ""): Record<string, string | number> {
+        let items = featuresString.split(",");
+        const data: Record<string, string | number> = {};
+        for (let s of items) {
+          let res = s.split("=");
+          if (res?.[0]) {
+            data[res[0]] = Number(res[1]) || res[1];
+          }
+        }
+        return data;
+      },
+    },
+  };
 }
 
 type envs = "browser" | "tauri";
@@ -32,24 +77,7 @@ export default async function mountHybrid(next: AsyncProcessFn) {
 
   const bridge = new Hybrid();
 
-  // 使用proxy 再没有对应函数时，返回Promise.reject()
-  // window.rvtBridge = new Proxy<AbsHybrid>(bridge, {
-  //   get: function (target, property, receiver) {
-  //     // @ts-ignore
-  //     const value = target[property];
-  //     return value
-  //       ? value
-  //       : () =>
-  //         Promise.reject(
-  //           new ReferenceError(
-  //             `hybrid no such of function: 【${env}】 rvtBridge.${String(
-  //               property
-  //             )}`
-  //           )
-  //         );
-  //   },
-  // });
-  window.rvtBridge = bridge;
+  window.h5_bridge = bridge;
 
   next && next();
 }

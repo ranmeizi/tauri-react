@@ -3,6 +3,7 @@ import DocView from ".";
 import DocWindowHeader from "./views/introduce/window-header";
 import { TreeViewBaseItem } from "@mui/x-tree-view";
 import DocTauriReact from "./views/tauri-react";
+import DocExamples from "./views/examples";
 
 type MenuType = {
   title: string;
@@ -27,6 +28,11 @@ const menu: MenuType[] = [
         element: <DocWindowHeader />,
       },
     ],
+  },
+  {
+    title: "示例",
+    path: "/w/doc/examples",
+    element: <DocExamples />,
   },
 ];
 

@@ -2,14 +2,6 @@ use cocoa::appkit::{NSWindow, NSWindowStyleMask};
 use serde_json::json;
 use tauri::{App, Runtime, Window,Manager};
 
-const INIT_SCRIPT: &str = r#"
-  if (window.location.origin === 'https://tauri.app') {
-    console.log("hello world from js init script");
-
-    window.__MY_CUSTOM_PROPERTY__ = { foo: 'bar' };
-  }
-"#;
-
 pub trait WindowExt {
 
     #[cfg(target_os = "macos")]

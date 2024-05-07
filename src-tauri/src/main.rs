@@ -8,38 +8,9 @@ use tokio;
 mod handlers;
 mod setups;
 
-const INIT_SCRIPT: &str = r#"
+pub const INIT_SCRIPT: &str = r#"
   console.log("hi, use WindowBuilder.initialization_script to inject javascript in your html")
 "#;
-
-
-#[tauri::command]
-async fn open_new_window(
-    handle: tauri::AppHandle,
-    url: &str,
-    lebel: &str,
-    height: Option<f64>,
-    width: Option<f64>,
-) -> Result<(), ()> {
-    let docs_window = tauri::WindowBuilder::new(
-        &handle.clone(),
-        lebel, /* the unique window label */
-        tauri::WindowUrl::External(url.parse().unwrap()),
-    )
-    .initialization_script(INIT_SCRIPT)
-    .inner_size(width.unwrap_or(800.0), height.unwrap_or(600.0))
-    .build()
-    .unwrap();
-
-    // todo!("这里，识别label，若当前有label = label的window，那么把它调到顶层");
-
-    // 使用主线程修改window
-    handle
-        .run_on_main_thread(move || docs_window.set_transparent_titlebar(true))
-        .unwrap();
-
-    Ok(())
-}
 
 fn main() {
     // 这里 `"quit".to_string()` 定义菜单项 ID，第二个参数是菜单项标签。
@@ -70,7 +41,8 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             handlers::example::greet,
             handlers::example::async_greet,
-            open_new_window
+            handlers::common::open_window,
+            handlers::common::open_browser
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

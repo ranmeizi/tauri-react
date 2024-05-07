@@ -59,6 +59,7 @@ const styleSheet: SxProps<Theme> = (theme) => ({
 
 export default function () {
   const navigate = useNavigate();
+
   function onTreeClick(e: any, { id, children }: TreeViewBaseItem) {
     if (children && children.length > 0) {
       return;
@@ -105,27 +106,23 @@ function Header() {
         <LogoText text="react" />
       </Box>
       <Stack direction={"row"} gap={2} className="header__settings">
-        <IconButton>
+        <IconButton
+          onClick={() => {
+            invoke("open_browser", {
+              url: "https://github.com/ranmeizi/tauri-react",
+            });
+          }}
+        >
           <GitHubIcon />
         </IconButton>
         <DarkModeSwitch />
         <IconButton
           onClick={() => {
-            // invoke("open_new_window", {
-            //   url: "http://localhost:1420/w/mui",
-            //   lebel: "window_config",
-            //   height: 600,
-            //   width: 400,
-            // }).then((res) => {
-            //   console.log("open_new_window", res);
-            // });
-            invoke("open_new_window", {
-              url: "http://localhost:1420",
-              lebel: "window_config" + Math.round(Math.random() * 10),
-              height: 800,
-              width: 1200,
-            }).then((res) => {
-              console.log("open_new_window", res);
+            invoke("open_window", {
+              url: "http://localhost:1420/w/mui",
+              label: "window_config",
+              height: 600,
+              width: 400,
             });
           }}
         >
