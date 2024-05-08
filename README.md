@@ -43,17 +43,17 @@ rust
 
 - [x] 打开新窗口
 - [x] 自定义窗口头部
-- [ ] 多窗口/前后端状态同步(theme)
+- [x] 多窗口/前后端状态同步(theme)
 - [ ] 后端状态持久化
 - [ ] ??
 
 web
 
-- [ ] Window Layout  
-- [ ] Menu Layout
-- [ ] TagView Layout
-  - [ ] 标签页开发
-- [ ] 尝试使用 rxdb 同步状态/ 状态管理(抛弃react-redux)
-  - [ ] rx react的context 创建一个collection 作为配置表，context接收值，做系统级更新 (犹豫)
-  - [ ] rx react的hoc 包裹一层响应式 props 作为组件更新，组件级更新 (看起来这样更合适)
+- [x] Window Layout  
+- [x] Menu Layout
+- [x] TagView Layout
+  - [x] 标签页开发
+- [x] 尝试使用 rxdb 同步状态/ 状态管理(抛弃react-redux)
+  - [x] rx react的context 创建一个collection 作为配置表，context接收值，做系统级更新 (犹豫)
+  - [x] rx react的hoc 包裹一层响应式 props 作为组件更新，组件级更新 (看起来这样更合适)
 - [ ] ??

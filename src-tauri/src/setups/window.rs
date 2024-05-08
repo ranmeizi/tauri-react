@@ -1,5 +1,5 @@
+#[cfg(target_os = "macos")]
 use cocoa::appkit::{NSWindow, NSWindowStyleMask};
-use serde_json::json;
 use tauri::{App, Runtime, Window,Manager};
 
 pub trait WindowExt {

@@ -13,14 +13,18 @@ version = "0.0.0"
 tauri-build = {version = "1.5", features = [] }
 
 [dependencies]
-cocoa = "0.25.0"
 serde = {version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tauri = {version = "1.5", features = [ "dialog-all", "window-hide", "window-unmaximize", "window-unminimize", "window-show", "window-start-dragging", "window-maximize", "window-close", "window-minimize", "shell-open"] }
 tokio = {version = "1.35.0", features = ["full"] }
 open = "5"
 
+[target.'cfg(target_os = "macos")'.dependencies]
+# 这些依赖仅在macOS系统上生效
+cocoa = "0.25.0"
+
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
 # DO NOT REMOVE!!
 custom-protocol = ["tauri/custom-protocol"]
+
