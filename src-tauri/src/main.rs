@@ -35,7 +35,7 @@ fn main() {
             .build()
             .unwrap();
 
-            window::setup(win);
+            win.custom_window();
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![

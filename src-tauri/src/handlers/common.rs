@@ -30,7 +30,7 @@ pub async fn open_window(
 
     // 使用主线程修改window
     handle
-        .run_on_main_thread(move || docs_window.set_transparent_titlebar(true))
+        .run_on_main_thread(move || docs_window.custom_window())
         .unwrap();
 
     Ok(())
