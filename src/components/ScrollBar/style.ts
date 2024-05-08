@@ -2,6 +2,7 @@ const style = {
   "&::-webkit-scrollbar": {
     width: "10px",
     opacity: "0.3",
+    display:'block'
   },
 
   "&::-webkit-scrollbar-thumb": {

@@ -1,5 +1,7 @@
 #[cfg(target_os = "macos")]
 use cocoa::appkit::{NSWindow, NSWindowStyleMask};
+#[cfg(target_os = "windows")]
+use window_shadows::{set_shadow};
 use tauri::{App, Runtime, Window,Manager};
 
 /** 先只支持 macos 和 windows 需要自己根据平台实现 WindowExt Trait */
@@ -51,5 +53,6 @@ impl<R: Runtime> WindowExt for Window<R> {
      */
     fn hide_titlebar(&self) {
         self.set_decorations(false).ok();
+        set_shadow(&self,true).ok();
     }
 }
